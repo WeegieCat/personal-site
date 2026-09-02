@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import Preloader from "@/components/ui/Preloader";
 import ProjectCard from "@/components/works/ProjectCard";
 import HeroCanvas from "@/three/canvas/HeroCanvas";
 import { featuredProjects, skills } from "@/content/projects";
@@ -8,6 +9,8 @@ import { featuredProjects, skills } from "@/content/projects";
 export default function HomePage() {
     return (
         <>
+            {/* ローディング演出はトップページだけに出す */}
+            <Preloader />
             <section className='py-20'>
                 <Container size='wide'>
                     <div className='grid items-center gap-12 md:grid-cols-2'>
