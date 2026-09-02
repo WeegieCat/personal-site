@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/*
+ * next-themes は <html> に class="dark" を付与するため、
+ * Tailwind v4 の dark: バリアントをクラス基準に切り替える。
+ * （既定はメディアクエリ基準なのでトグルが効かない）
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ライトテーマの値。dark クラスで上書きされる */
+:root {
+    --background: #ffffff;
+    --surface: #f8fafc;
+    --foreground: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent: #7c3aed;
+}
+
+.dark {
+    --background: #0b1220;
+    --surface: #111a2e;
+    --foreground: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #1f2937;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --accent: #a78bfa;
+}
+
+/*
+ * @theme inline にすることで各ユーティリティが var() 参照のまま出力され、
+ * .dark の値の切り替えがそのまま反映される。
+ */
+@theme inline {
+    --color-background: var(--background);
+    --color-surface: var(--surface);
+    --color-foreground: var(--foreground);
+    --color-muted: var(--muted);
+    --color-border: var(--border);
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-accent: var(--accent);
+
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    --animate-fade: fade-in 0.5s ease-out both;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* 見出しなどのグラデーション文字。旧 .gradient-text の置き換え */
+@utility gradient-text {
+    background-image: linear-gradient(
+        to right,
+        var(--primary),
+        var(--accent)
+    );
+    background-clip: text;
+    color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+/* MDX 記事本文。生成されたHTMLに直接クラスを付けられないため子孫セレクタで当てる */
+.article {
+    line-height: 1.8;
+}
+
+.article > * + * {
+    margin-top: 1.25rem;
+}
+
+.article h2 {
+    margin-top: 2.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.article h3 {
+    margin-top: 2rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+}
+
+.article a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.article ul,
+.article ol {
+    padding-left: 1.5rem;
+}
+
+.article ul {
+    list-style: disc;
+}
+
+.article ol {
+    list-style: decimal;
+}
+
+.article code {
+    border-radius: 0.25rem;
+    background-color: var(--surface);
+    padding: 0.15em 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.article pre {
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    padding: 1rem;
+}
+
+.article pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.article blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 1rem;
+    color: var(--muted);
+}

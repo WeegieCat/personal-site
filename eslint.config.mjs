@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
         "next-env.d.ts",
         // Custom ignores:
         "README.md",
+        // ビルド成果物（OpenNext 時代の残骸を含む）は対象外にする
+        ".open-next/**",
+        ".wrangler/**",
     ]),
 ]);
 

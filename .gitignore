@@ -44,3 +44,7 @@ next-env.d.ts
 dist/
 build/
 .open-next/
+
+# 静的出力 / Cloudflare
+/out/
+.wrangler/

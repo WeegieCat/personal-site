@@ -1,18 +1,11 @@
 {
     "$schema": "./node_modules/wrangler/config-schema.json",
-    "main": ".open-next/worker.js",
     "name": "personalsite",
-    // Set this to today's date
-    "compatibility_date": "2026-02-22",
-    "compatibility_flags": ["nodejs_compat"],
-    "routes": [
-        {
-            "pattern": "weegiecat.com",
-            "custom_domain": true,
-        },
-    ],
+    "compatibility_date": "2026-09-02",
+    // next build (output: "export") が生成した静的サイトをそのまま配信する。
+    // Worker スクリプトは持たないため "main" は指定しない。
     "assets": {
-        "directory": ".open-next/assets",
-        "binding": "ASSETS",
-    },
+        "directory": "./out",
+        "not_found_handling": "404-page"
+    }
 }

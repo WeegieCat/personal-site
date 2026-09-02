@@ -1,0 +1,23 @@
+---
+title: "サイトを Next.js 16 + Cloudflare Workers で作り直した"
+description: "OpenNext をやめて静的出力に切り替え、React Three Fiber を導入するまでの構成整理のメモ。"
+date: "2026-09-02"
+tags: ["Next.js", "Cloudflare", "React Three Fiber"]
+---
+
+## なぜ作り直したか
+
+もともと `@opennextjs/cloudflare` で SSR を含めた Next.js を Cloudflare Workers 上で動かしていたが、
+このサイトに動的なサーバー処理が必要な場面がほとんど無いことがはっきりした。
+
+ビルドパイプラインが複雑なぶん壊れやすく、実際にデプロイが失敗し続けていたため、
+`output: "export"` による静的出力に切り替えて Workers の静的アセット配信に載せる構成へ変更した。
+
+## 構成
+
+- Next.js 16 (App Router) / React 19
+- Tailwind CSS v4（CSS-first 設定）
+- React Three Fiber + drei
+- Cloudflare Workers（静的アセット配信）
+
+ビルドは `next build` だけで完結し、`wrangler deploy` で公開される。
