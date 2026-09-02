@@ -88,6 +88,36 @@ body {
     color: #ffffff;
 }
 
+/*
+ * トップページのローディング演出。
+ * data-preloader="done" は layout.tsx の描画前スクリプトが付けるため、
+ * セッション2回目以降はローダーが一度も描画されずチラつかない。
+ */
+.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: var(--background);
+    color: var(--foreground);
+    transform: translateY(0);
+    transition: transform 800ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.preloader--exiting {
+    transform: translateY(-100%);
+}
+
+:root[data-preloader="done"] .preloader {
+    display: none;
+}
+
+/* 動きを減らす設定の場合はローダー自体を出さない */
+@media (prefers-reduced-motion: reduce) {
+    .preloader {
+        display: none;
+    }
+}
+
 /* MDX 記事本文。生成されたHTMLに直接クラスを付けられないため子孫セレクタで当てる */
 .article {
     line-height: 1.8;
