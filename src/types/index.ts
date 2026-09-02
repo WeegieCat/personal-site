@@ -1,62 +1,35 @@
 /**
- * Project type definition
+ * Works に並べるプロジェクト
  */
 export interface Project {
     id: string;
+    /** /works/[slug] のURLに使う */
+    slug: string;
     title: string;
     description: string;
     image?: string;
     tags: string[];
+    /** 公開URL（外部サイト） */
     link?: string;
     github?: string;
+    /**
+     * サイト内に埋め込む場合の配信元URL。
+     * 指定すると /works/[slug] に iframe 埋め込みが表示される。
+     */
+    embedUrl?: string;
     featured?: boolean;
     year?: number;
 }
 
 /**
- * Skill type definition
+ * ブログ記事の frontmatter
  */
-export interface Skill {
-    name: string;
-    level: "beginner" | "intermediate" | "advanced" | "expert";
-    category: "frontend" | "backend" | "devops" | "other";
-}
-
-/**
- * Experience type definition
- */
-export interface Experience {
-    id: string;
-    role: string;
-    company: string;
-    period: {
-        start: Date;
-        end?: Date;
-    };
-    description: string;
-    skills: string[];
-}
-
-/**
- * Blog post type definition
- */
-export interface BlogPost {
-    id: string;
-    title: string;
+export interface BlogPostMeta {
     slug: string;
+    title: string;
     description: string;
-    content: string;
-    date: Date;
+    /** ISO 8601 (YYYY-MM-DD) */
+    date: string;
     tags: string[];
-    featured?: boolean;
-}
-
-/**
- * Contact form data
- */
-export interface ContactFormData {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
+    draft?: boolean;
 }
