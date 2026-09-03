@@ -3,8 +3,9 @@
 import { useRef } from "react";
 import CubeBadge from "@/three/canvas/CubeBadge";
 import { usePointerParallax } from "@/hooks/usePointerParallax";
+import { SITE_NAME } from "@/lib/site";
 
-const NAME = "FEYNMAN";
+const NAME = SITE_NAME.toUpperCase();
 
 function scrollToNext() {
     document
@@ -75,7 +76,9 @@ export default function Hero() {
                 />
 
                 {/* 実際のページ見出しはこちら。視覚的な表現はすべて装飾として下に重ねる */}
-                <h1 className='sr-only'>Hi, I&apos;m a Creative Developer</h1>
+                <h1 className='sr-only'>
+                    Hi, I&apos;m {SITE_NAME} — a Creative Developer
+                </h1>
 
                 <div ref={introRef} className='relative z-10 max-w-xs'>
                     <p className='text-sm font-extrabold tracking-[0.4em] text-white sm:text-base'>

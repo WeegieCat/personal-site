@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import { navItems } from "./navItems";
 import Container from "@/components/ui/Container";
+import { SITE_INITIAL, SITE_NAME } from "@/lib/site";
 
 function SunIcon({ className = "" }: { className?: string }) {
     return (
@@ -71,11 +72,11 @@ export default function Header() {
                     <Link href='/' className='flex items-center gap-2'>
                         <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent'>
                             <span className='text-sm font-bold text-white'>
-                                F
+                                {SITE_INITIAL}
                             </span>
                         </div>
                         <span className='hidden text-lg font-bold text-foreground sm:inline'>
-                            Feynman
+                            {SITE_NAME}
                         </span>
                     </Link>
 
