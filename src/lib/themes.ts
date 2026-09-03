@@ -50,7 +50,9 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#ef4444",
             accent: "#f59e0b",
             "hero-bg": "#fff1e6",
-            "on-primary": "#ffffff",
+            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
+            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
+            "on-primary": "#111111",
         },
     },
     {
@@ -82,7 +84,9 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#a855f7",
             accent: "#ec4899",
             "hero-bg": "#f3e8ff",
-            "on-primary": "#ffffff",
+            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
+            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
+            "on-primary": "#111111",
         },
     },
 ];
