@@ -17,15 +17,24 @@ interface EdgeData {
 }
 
 const EDGE_COLOR = "#8b7355";
-// nodeGradientPreset: "dustyGrass"（既定値）
-const GRADIENT_STOPS = ["#d4fc79", "#96e6a1"];
 
-function colorFromGradient(ratio: number): Color {
+/**
+ * SceneContent.tsx の getColorFromStops() をそのまま移植。
+ * 2色に限らず、任意の数の色を等間隔に並べて補間する
+ * （nodeGradientPreset には "mochiHoppe" のような3色プリセットもあるため）。
+ */
+function colorFromStops(stops: readonly string[], ratio: number): Color {
+    if (stops.length === 0) return new Color("#4CAF50");
+    if (stops.length === 1) return new Color(stops[0]);
+
     const clamped = Math.min(1, Math.max(0, ratio));
-    return new Color(GRADIENT_STOPS[0]).lerp(
-        new Color(GRADIENT_STOPS[1]),
-        clamped
-    );
+    const scaled = clamped * (stops.length - 1);
+    const index = Math.floor(scaled);
+    const t = scaled - index;
+
+    const start = new Color(stops[index]);
+    const end = new Color(stops[Math.min(index + 1, stops.length - 1)]);
+    return start.lerp(end, t);
 }
 
 /**
@@ -132,7 +141,7 @@ function layoutTree(): LayoutResult {
     };
 }
 
-function Bonsai() {
+function Bonsai({ colors }: { colors: readonly string[] }) {
     const groupRef = useRef<Group>(null);
     const { nodes, edges, minY, maxY } = useMemo(() => layoutTree(), []);
 
@@ -171,7 +180,8 @@ function Bonsai() {
                 />
             ))}
             {nodes.map((node, i) => {
-                const color = colorFromGradient(
+                const color = colorFromStops(
+                    colors,
                     (node.position.y - minY) / (maxY - minY)
                 );
                 return (
@@ -189,18 +199,23 @@ function Bonsai() {
     );
 }
 
-export default function BonsaiScene() {
+interface BonsaiSceneProps {
+    /** ノードのグラデーション色。テーマごとに CubeBadge と同じ要領で外から渡す */
+    colors: readonly string[];
+}
+
+export default function BonsaiScene({ colors }: BonsaiSceneProps) {
     return (
         // 実際のホーム画面のカメラ(-20,20,30)と同じ向きの比率を保ったまま、
         // 小さいカード用に距離を縮めている（実際の実装に自動回転は無いが、
         // プレビュー用の演出として Bonsai 側でゆっくり自動回転させている）。
         <Canvas camera={{ position: [-3.5, 3.5, 5.25], fov: 40 }} dpr={[1, 2]}>
-            {/* SceneContentのbackgroundColor既定値 */}
+            {/* SceneContentのbackgroundColor既定値。テーマに関わらず発光ノードが映える暗色で固定 */}
             <color attach='background' args={["#1a1a1a"]} />
             <ambientLight intensity={0.5} />
             <directionalLight position={[5, 10, 7]} intensity={1} />
             <pointLight position={[-5, 5, 5]} intensity={0.3} />
-            <Bonsai />
+            <Bonsai colors={colors} />
             <EffectComposer>
                 <Bloom
                     mipmapBlur
