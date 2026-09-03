@@ -59,13 +59,20 @@ export function usePointerParallax(
             raf = requestAnimationFrame(tick);
         };
 
-        container.addEventListener("pointermove", onMove);
-        container.addEventListener("pointerleave", onLeave);
+        // container 自身ではなく window で拾う。fixed かつ z-index の高い
+        // ヘッダーが上に重なっている区間では、container 上の pointermove は
+        // 発火しないため、カーソルがヘッダー上にあるとパララックスが
+        // 止まって見えてしまう。window なら重なりに関係なく座標を追える。
+        window.addEventListener("pointermove", onMove);
+        document.documentElement.addEventListener("pointerleave", onLeave);
         raf = requestAnimationFrame(tick);
 
         return () => {
-            container.removeEventListener("pointermove", onMove);
-            container.removeEventListener("pointerleave", onLeave);
+            window.removeEventListener("pointermove", onMove);
+            document.documentElement.removeEventListener(
+                "pointerleave",
+                onLeave
+            );
             cancelAnimationFrame(raf);
             for (const { ref } of layers) {
                 if (ref.current) ref.current.style.transform = "";

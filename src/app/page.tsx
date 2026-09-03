@@ -52,12 +52,9 @@ export default function HomePage() {
             <section className='py-20'>
                 <Container size='wide'>
                     <div className='mb-16 text-center'>
-                        <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
+                        <h2 className='text-4xl font-bold sm:text-5xl'>
                             Skills &amp; Expertise
                         </h2>
-                        <p className='text-lg text-muted'>
-                            要件に応じて選定した技術スタックで、実装から運用まで一貫して担当します。
-                        </p>
                     </div>
 
                     <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
