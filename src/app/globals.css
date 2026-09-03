@@ -1,27 +1,7 @@
 @import "tailwindcss";
 
-/*
- * next-themes は <html> に class="dark" を付与するため、
- * Tailwind v4 の dark: バリアントをクラス基準に切り替える。
- * （既定はメディアクエリ基準なのでトグルが効かない）
- */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* ライトテーマの値。dark クラスで上書きされる */
+/* ダーク/ライトの切り替えは廃止し、この配色に固定する */
 :root {
-    --background: #ffffff;
-    --surface: #f8fafc;
-    --foreground: #0f172a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --accent: #7c3aed;
-    /* ヒーローのポスター面。primary/accent の図形が映える淡い下地 */
-    --hero-bg: #eaeefb;
-}
-
-.dark {
     --background: #0b1220;
     --surface: #111a2e;
     --foreground: #f1f5f9;
@@ -30,13 +10,10 @@
     --primary: #3b82f6;
     --primary-hover: #60a5fa;
     --accent: #a78bfa;
+    /* ヒーローのポスター面。primary/accent の図形が映える下地 */
     --hero-bg: #0d1526;
 }
 
-/*
- * @theme inline にすることで各ユーティリティが var() 参照のまま出力され、
- * .dark の値の切り替えがそのまま反映される。
- */
 @theme inline {
     --color-background: var(--background);
     --color-surface: var(--surface);
