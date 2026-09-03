@@ -31,18 +31,16 @@ export const SITE_THEMES: SiteTheme[] = [
         id: "default",
         label: "Default",
         vars: {
-            background: "#ffffff",
-            surface: "#ecfeff",
-            foreground: "#0f172a",
-            muted: "#64748b",
-            border: "#e2e8f0",
-            primary: "#06b6d4",
-            "primary-hover": "#0891b2",
-            accent: "#ec4899",
-            "hero-bg": "#f0fdff",
-            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
-            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
-            "on-primary": "#111111",
+            background: "#0b1220",
+            surface: "#111a2e",
+            foreground: "#f1f5f9",
+            muted: "#94a3b8",
+            border: "#1f2937",
+            primary: "#3b82f6",
+            "primary-hover": "#60a5fa",
+            accent: "#a78bfa",
+            "hero-bg": "#0d1526",
+            "on-primary": "#f8fafc",
         },
         // 実際のtrie-bonsaiの "mochiHoppe" プリセットそのまま（黄→シアン→ピンク）
         bonsaiGradient: ["#fff446", "#00f3ff", "#ff70a7"],
