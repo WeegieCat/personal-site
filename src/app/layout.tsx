@@ -46,9 +46,11 @@ export default function RootLayout({
                      * ヘッダーのテーマピッカーを廃止したため、このキューブが
                      * テーマカラーを変える唯一の操作になった。fixed でビュー
                      * ポート基準に固定し、どのページでもスクロールしても
-                     * 常に右下に留まるようにしている。
+                     * 常に右下に留まる。位置(bottom)自体はCubeBadge内部で
+                     * footerの表示状態を見て動的に切り替えているので、
+                     * ここではサイズだけを渡す。
                      */}
-                    <CubeBadge className='fixed right-6 bottom-24 z-50 h-16 w-16 sm:right-10 sm:bottom-28 sm:h-20 sm:w-20' />
+                    <CubeBadge className='h-16 w-16 sm:h-20 sm:w-20' />
                 </SiteThemeProvider>
             </body>
         </html>

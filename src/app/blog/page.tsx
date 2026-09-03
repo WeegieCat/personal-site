@@ -16,7 +16,7 @@ export default async function BlogPage() {
             <header className='mb-12'>
                 <h1 className='mb-4 text-4xl font-bold sm:text-5xl'>Blog</h1>
                 <p className='text-lg text-muted'>
-                    Qiitaに投稿した記事をまとめている
+
                 </p>
             </header>
 
