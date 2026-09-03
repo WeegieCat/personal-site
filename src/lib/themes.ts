@@ -28,6 +28,23 @@ export interface SiteTheme {
 /** 右下のキューブバッジをクリックするたびにこの順で切り替わる */
 export const SITE_THEMES: SiteTheme[] = [
     {
+        id: "bubblegum",
+        label: "Bubblegum",
+        vars: {
+            background: "#faf5ff",
+            surface: "#f3e8ff",
+            foreground: "#3b0764",
+            muted: "#7e22ce",
+            border: "#d8b4fe",
+            primary: "#9333ea",
+            "primary-hover": "#a855f7",
+            accent: "#ec4899",
+            "hero-bg": "#f3e8ff",
+            "on-primary": "#111111",
+        },
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
+    },
+    {
         id: "default",
         label: "Default",
         vars: {
@@ -45,8 +62,8 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#f0fdff",
             "on-primary": "#111111",
         },
-        // 他のテーマと同様、木の発光ノードもサイトのテーマカラー（mochiHoppe）に統一
-        bonsaiGradient: ["#fff446", "#00f3ff", "#ff70a7"],
+        // 木の発光ノードは全テーマ共通でdustyGrassに統一
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
         id: "midnight",
@@ -64,7 +81,7 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#0d1526",
             "on-primary": "#f8fafc",
         },
-        bonsaiGradient: ["#3b82f6", "#a78bfa"],
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
         id: "sunset",
@@ -81,7 +98,7 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#fff1e6",
             "on-primary": "#111111",
         },
-        bonsaiGradient: ["#dc2626", "#f59e0b"],
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
         id: "terminal",
@@ -98,24 +115,7 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#000000",
             "on-primary": "#f0fdf4",
         },
-        bonsaiGradient: ["#16a34a", "#4ade80"],
-    },
-    {
-        id: "bubblegum",
-        label: "Bubblegum",
-        vars: {
-            background: "#faf5ff",
-            surface: "#f3e8ff",
-            foreground: "#3b0764",
-            muted: "#7e22ce",
-            border: "#d8b4fe",
-            primary: "#9333ea",
-            "primary-hover": "#a855f7",
-            accent: "#ec4899",
-            "hero-bg": "#f3e8ff",
-            "on-primary": "#111111",
-        },
-        bonsaiGradient: ["#9333ea", "#ec4899"],
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
 ];
 
