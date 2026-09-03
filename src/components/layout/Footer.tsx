@@ -1,9 +1,10 @@
 import Container from "@/components/ui/Container";
-import { GITHUB_URL, QIITA_URL, SITE_NAME } from "@/lib/site";
+import { GITHUB_URL, QIITA_URL, SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const socialLinks = [
-    { label: "GitHub", href: GITHUB_URL },
-    { label: "Qiita", href: QIITA_URL },
+    { label: "Email", href: `mailto:${SITE_EMAIL}`, external: false },
+    { label: "GitHub", href: GITHUB_URL, external: true },
+    { label: "Qiita", href: QIITA_URL, external: true },
 ];
 
 export default function Footer() {
@@ -23,8 +24,10 @@ export default function Footer() {
                         <a
                             key={item.label}
                             href={item.href}
-                            target='_blank'
-                            rel='noopener noreferrer'
+                            {...(item.external && {
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                            })}
                             className='hv-underline text-sm text-muted'>
                             {item.label}
                         </a>
