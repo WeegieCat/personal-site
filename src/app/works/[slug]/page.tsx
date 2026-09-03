@@ -68,7 +68,7 @@ export default async function WorkDetailPage({ params }: Params) {
                             alt={project.title}
                             fill
                             sizes='(max-width: 1200px) 100vw, 1024px'
-                            className='object-cover'
+                            className='object-contain'
                         />
                     </div>
                 )
