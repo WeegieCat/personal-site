@@ -9,6 +9,8 @@ export interface SiteThemeVars {
     "primary-hover": string;
     accent: string;
     "hero-bg": string;
+    /** primary色の円やボタンの上に乗る文字専用の色（背景色と同化しないよう独立させている） */
+    "on-primary": string;
 }
 
 export interface SiteTheme {
@@ -32,21 +34,23 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#60a5fa",
             accent: "#a78bfa",
             "hero-bg": "#0d1526",
+            "on-primary": "#f8fafc",
         },
     },
     {
         id: "sunset",
         label: "Sunset",
         vars: {
-            background: "#1a0f0f",
-            surface: "#2b1414",
-            foreground: "#fdf2f2",
-            muted: "#e2a8a8",
-            border: "#4a1f1f",
+            background: "#ffffff",
+            surface: "#fff1e6",
+            foreground: "#451a03",
+            muted: "#9a3412",
+            border: "#fed7aa",
             primary: "#dc2626",
             "primary-hover": "#ef4444",
             accent: "#f59e0b",
-            "hero-bg": "#1a0f0f",
+            "hero-bg": "#fff1e6",
+            "on-primary": "#ffffff",
         },
     },
     {
@@ -55,13 +59,14 @@ export const SITE_THEMES: SiteTheme[] = [
         vars: {
             background: "#000000",
             surface: "#0a0a0a",
-            foreground: "#22c55e",
-            muted: "#16a34a",
+            foreground: "#d1fae5",
+            muted: "#4ade80",
             border: "#14532d",
-            primary: "#22c55e",
-            "primary-hover": "#4ade80",
-            accent: "#86efac",
+            primary: "#16a34a",
+            "primary-hover": "#22c55e",
+            accent: "#4ade80",
             "hero-bg": "#000000",
+            "on-primary": "#f0fdf4",
         },
     },
     {
@@ -77,6 +82,7 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#a855f7",
             accent: "#ec4899",
             "hero-bg": "#f3e8ff",
+            "on-primary": "#ffffff",
         },
     },
 ];

@@ -12,6 +12,14 @@
     --accent: #a78bfa;
     /* ヒーローのポスター面。primary/accent の図形が映える下地 */
     --hero-bg: #0d1526;
+    /*
+     * primary色の円やボタンの「上に乗る」文字専用の色。
+     * --foreground はテーマによって明にも暗にもなるため、
+     * primaryの上に置く文字をそれと連動させると
+     * 配色次第で背景色と同化して読めなくなることがある。
+     * ワードマークなど primary の上に重なる文字は必ずこちらを使う。
+     */
+    --on-primary: #f8fafc;
 }
 
 @theme inline {
@@ -24,6 +32,7 @@
     --color-primary-hover: var(--primary-hover);
     --color-accent: var(--accent);
     --color-hero-bg: var(--hero-bg);
+    --color-on-primary: var(--on-primary);
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
