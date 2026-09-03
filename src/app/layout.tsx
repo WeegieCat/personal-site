@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CubeBadge from "@/three/canvas/CubeBadge";
-import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 import { SiteThemeProvider } from "@/lib/theme-context";
 
 const geistSans = Geist({
@@ -20,10 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     // 各ページは title だけを定義すれば `<title> | ${SITE_NAME}` になる
     title: {
-        default: SITE_NAME,
+        default: "Portfolio",
         template: `%s | ${SITE_NAME}`,
     },
-    description: `${SITE_TAGLINE} のポートフォリオサイト`,
 };
 
 export default function RootLayout({
@@ -36,10 +35,9 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
                 <SiteThemeProvider>
-                    <div className='flex min-h-screen flex-col'>
+                    <div className='relative flex min-h-screen flex-col'>
                         <Header />
-                        {/* Header が fixed のぶん本文を押し下げる（旧: 各ページの pt-20） */}
-                        <main className='flex-1 pt-16'>{children}</main>
+                        <main className='flex-1'>{children}</main>
                         <Footer />
                     </div>
                     {/*
