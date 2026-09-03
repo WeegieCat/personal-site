@@ -49,6 +49,24 @@ export const SITE_THEMES: SiteTheme[] = [
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
+        id: "midnight",
+        label: "Midnight",
+        // 以前 Default テーマだった黒＋青の配色を独立したテーマとして復活させたもの
+        vars: {
+            background: "#0b1220",
+            surface: "#111a2e",
+            foreground: "#f1f5f9",
+            muted: "#94a3b8",
+            border: "#1f2937",
+            primary: "#3b82f6",
+            "primary-hover": "#60a5fa",
+            accent: "#a78bfa",
+            "hero-bg": "#0d1526",
+            "on-primary": "#f8fafc",
+        },
+        bonsaiGradient: ["#3b82f6", "#a78bfa"],
+    },
+    {
         id: "sunset",
         label: "Sunset",
         vars: {
