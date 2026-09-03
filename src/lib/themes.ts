@@ -45,8 +45,8 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#f0fdff",
             "on-primary": "#111111",
         },
-        // 実際のtrie-bonsaiのデフォルト "dustyGrass" プリセット（元の木の配色に戻した）
-        bonsaiGradient: ["#d4fc79", "#96e6a1"],
+        // 他のテーマと同様、木の発光ノードもサイトのテーマカラー（mochiHoppe）に統一
+        bonsaiGradient: ["#fff446", "#00f3ff", "#ff70a7"],
     },
     {
         id: "midnight",
