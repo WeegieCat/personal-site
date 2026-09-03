@@ -42,7 +42,7 @@ export default function HomePage() {
                     <div className='text-center'>
                         <Link
                             href='/works'
-                            className='inline-block border-b-2 border-primary px-8 py-3 font-semibold text-primary'>
+                            className='hv-underline font-semibold text-primary'>
                             すべてのプロジェクトを見る →
                         </Link>
                     </div>

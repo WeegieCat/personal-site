@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: Params) {
         <Container className='py-16'>
             <Link
                 href='/blog'
-                className='mb-8 inline-block text-sm text-muted transition-colors hover:text-primary'>
+                className='hv-underline mb-8 inline-block text-sm text-muted'>
                 ← Blog に戻る
             </Link>
 

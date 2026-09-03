@@ -31,7 +31,7 @@ export default function Header() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`transition-colors hover:text-primary ${
+                                className={`hv-underline ${
                                     pathname === item.href
                                         ? "font-semibold text-primary"
                                         : "text-muted"

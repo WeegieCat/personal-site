@@ -47,7 +47,7 @@ export default function InquiryPage() {
                                 target: "_blank",
                                 rel: "noopener noreferrer",
                             })}
-                            className='text-primary transition-colors hover:text-primary-hover'>
+                            className='hv-underline text-primary'>
                             {contact.value}
                         </a>
                     </li>
