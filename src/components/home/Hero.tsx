@@ -111,14 +111,14 @@ export default function Hero() {
                     aria-hidden='true'
                     className='relative z-10 mx-auto mt-20 max-w-4xl sm:mt-28'>
                     <div className='flex -rotate-6 flex-col items-center gap-1'>
-                        <div className='flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-foreground uppercase'>
+                        <div className='flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>CRE</span>
                             <span className='tri-up mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-accent' />
                             <span>TIVE</span>
                         </div>
-                        <div className='-mt-[0.08em] flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-foreground uppercase'>
+                        <div className='-mt-[0.08em] flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>DE</span>
-                            <span className='tri-down mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-primary' />
+                            <span className='tri-down mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-primary-hover' />
                             <span>EL</span>
                             <span className='hero-photo mx-[0.06em] inline-block h-[0.85em] w-[0.85em] rounded-full border-2 border-foreground' />
                             <span>PER</span>
