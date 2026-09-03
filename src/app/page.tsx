@@ -16,6 +16,9 @@ export default function HomePage() {
                         <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
                             Featured Projects
                         </h2>
+                        <p className='text-lg text-muted'>
+                            計画と実装の両面から、課題解決に取り組んだプロダクトです。
+                        </p>
                     </div>
 
                     <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
@@ -41,7 +44,7 @@ export default function HomePage() {
                             Skills &amp; Expertise
                         </h2>
                         <p className='text-lg text-muted'>
-                            幅広い技術スタックと開発経験を持ちます。
+                            要件に応じて選定した技術スタックで、実装から運用まで一貫して担当します。
                         </p>
                     </div>
 
@@ -66,22 +69,6 @@ export default function HomePage() {
                             </div>
                         ))}
                     </div>
-                </Container>
-            </section>
-
-            <section className='bg-gradient-to-r from-primary to-accent py-20'>
-                <Container className='text-center text-white'>
-                    <h2 className='mb-6 text-4xl font-bold sm:text-5xl'>
-                        一緒にプロジェクトを作りませんか？
-                    </h2>
-                    <p className='mb-8 text-xl text-white/80'>
-                        新しいプロジェクト、改善提案、協業のお誘い。お気軽にお問い合わせください。
-                    </p>
-                    <Link
-                        href='/inquiry'
-                        className='inline-block rounded-lg bg-white px-8 py-3 font-semibold text-primary transition-opacity hover:opacity-90'>
-                        お問い合わせはこちら
-                    </Link>
                 </Container>
             </section>
         </>
