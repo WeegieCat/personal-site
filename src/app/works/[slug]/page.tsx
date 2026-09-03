@@ -35,7 +35,7 @@ export default async function WorkDetailPage({ params }: Params) {
         <Container size='wide' className='py-16'>
             <Link
                 href='/works'
-                className='mb-8 inline-block text-sm text-muted transition-colors hover:text-primary'>
+                className='hv-underline mb-8 inline-block text-sm text-muted'>
                 ← Works に戻る
             </Link>
 

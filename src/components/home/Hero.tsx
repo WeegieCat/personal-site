@@ -13,21 +13,6 @@ function scrollToNext() {
         ?.scrollIntoView({ behavior: "smooth" });
 }
 
-function ChevronDownIcon() {
-    return (
-        <svg
-            viewBox='0 0 24 24'
-            className='h-5 w-5'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth={2}
-            strokeLinecap='round'
-            strokeLinejoin='round'>
-            <path d='m6 9 6 6 6-6' />
-        </svg>
-    );
-}
-
 function ArrowDownIcon() {
     return (
         <svg
@@ -48,7 +33,6 @@ export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const circleRef = useRef<HTMLDivElement>(null);
     const introRef = useRef<HTMLDivElement>(null);
-    const scrollButtonRef = useRef<HTMLButtonElement>(null);
     const wordmarkRef = useRef<HTMLDivElement>(null);
     const interestedRef = useRef<HTMLButtonElement>(null);
 
@@ -58,7 +42,6 @@ export default function Hero() {
     usePointerParallax(containerRef, [
         { ref: circleRef, strength: 20 },
         { ref: introRef, strength: 12 },
-        { ref: scrollButtonRef, strength: 10 },
         { ref: wordmarkRef, strength: 28 },
         { ref: interestedRef, strength: 16 },
     ]);
@@ -90,15 +73,6 @@ export default function Hero() {
                         Hi! I&apos;m a
                     </p>
                 </div>
-
-                <button
-                    ref={scrollButtonRef}
-                    type='button'
-                    onClick={scrollToNext}
-                    aria-label='次のセクションへスクロール'
-                    className='absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-foreground/30 text-foreground transition-colors hover:bg-foreground hover:text-hero-bg sm:top-10 sm:right-10 sm:h-12 sm:w-12'>
-                    <ChevronDownIcon />
-                </button>
 
                 {/*
                  * PLAYFUL DEVELOPER のワードマーク。A/V を三角形、O を顔写真に置き換えた装飾表現。

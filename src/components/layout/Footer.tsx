@@ -42,7 +42,7 @@ export default function Footer() {
                                 <li key={item.href}>
                                     <Link
                                         href={item.href}
-                                        className='text-sm text-muted transition-colors hover:text-primary'>
+                                        className='hv-underline text-sm text-muted'>
                                         {item.label}
                                     </Link>
                                 </li>
@@ -61,7 +61,7 @@ export default function Footer() {
                                             target: "_blank",
                                             rel: "noopener noreferrer",
                                         })}
-                                        className='text-sm text-muted transition-colors hover:text-primary'>
+                                        className='hv-underline text-sm text-muted'>
                                         {item.label}
                                     </a>
                                 </li>
