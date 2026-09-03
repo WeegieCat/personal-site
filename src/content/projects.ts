@@ -29,6 +29,7 @@ export const projects: Project[] = [
         id: "aruke-ru",
         slug: "aruke-ru",
         title: "アルケール",
+        image: "/images/demo.gif",
         description:
             "車イス利用者・高齢者・ランナーなど7属性の多様なニーズに合わせ、最適な経路を提案する歩行者向け地図アプリ。開発未経験者を含む4人チームのリーダー兼バックエンド・PM担当として牽引した。第13回e-ZUKAスマートアプリコンテスト2024 トヨタ自動車九州株式会社賞、九州アプリチャレンジ・キャラバン 特別賞を受賞。",
         tags: ["Flutter", "Firebase", "Google Maps Platform"],

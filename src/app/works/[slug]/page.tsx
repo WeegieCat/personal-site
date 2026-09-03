@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/ui/Container";
 import ProductEmbed from "@/components/works/ProductEmbed";
+import BonsaiPreview from "@/three/canvas/BonsaiPreview";
 import { projects } from "@/content/projects";
 
 interface Params {
@@ -53,6 +55,24 @@ export default async function WorkDetailPage({ params }: Params) {
                     ))}
                 </div>
             </header>
+
+            {project.slug === "trie-bonsai" ? (
+                <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
+                    <BonsaiPreview className='h-full w-full' />
+                </div>
+            ) : (
+                project.image && (
+                    <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
+                        <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            sizes='(max-width: 1200px) 100vw, 1024px'
+                            className='object-cover'
+                        />
+                    </div>
+                )
+            )}
 
             {/* embedUrl を持つプロダクトはこの場で動かせる */}
             {project.embedUrl && (
