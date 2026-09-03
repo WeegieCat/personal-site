@@ -13,9 +13,6 @@ interface ContainerProps {
     children: ReactNode;
 }
 
-/**
- * 旧構成で各ページの layout.tsx に重複していたコンテナ幅と左右余白を集約したもの。
- */
 export default function Container({
     size = "default",
     className = "",

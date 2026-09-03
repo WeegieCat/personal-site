@@ -10,11 +10,6 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-/**
- * サイト全体の配色テーマを保持する。ヘッダーのテーマピッカーと
- * ヒーローのキューブバッジの両方がこれを介して同じ状態を読み書きするため、
- * どちらから切り替えても表示がずれない。
- */
 export function SiteThemeProvider({ children }: { children: ReactNode }) {
     const [themeIndex, setThemeIndexState] = useState(0);
 
