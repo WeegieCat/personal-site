@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { cubeColorsFromTheme, SITE_THEMES } from "@/lib/themes";
+import { SITE_THEMES } from "@/lib/themes";
 import { useSiteTheme } from "@/lib/theme-context";
 
 /**
@@ -50,7 +50,13 @@ export default function CubeBadge({ className = "" }: { className?: string }) {
             className={`fixed right-6 z-50 overflow-hidden rounded-full border-2 border-foreground bg-background transition-[bottom,transform] duration-500 ease-out hover:scale-105 sm:right-10 ${
                 isNearFooter ? RAISED_POSITION : REST_POSITION
             } ${className}`}>
-            <CubeScene colors={cubeColorsFromTheme(theme)} />
+            <CubeScene
+                colors={[
+                    theme.vars.primary,
+                    theme.vars.accent,
+                    theme.vars["primary-hover"],
+                ]}
+            />
         </button>
     );
 }

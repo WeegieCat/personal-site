@@ -36,9 +36,13 @@ export const SITE_THEMES: SiteTheme[] = [
             foreground: "#f1f5f9",
             muted: "#94a3b8",
             border: "#1f2937",
-            primary: "#3b82f6",
-            "primary-hover": "#60a5fa",
-            accent: "#a78bfa",
+            // primary/accentも木と同じmochiHoppe配色（シアン・ピンク）の方向で揃える。
+            // ただし木のグラデーションの#00f3ffそのままだと明るすぎて、上に乗る
+            // 白文字（on-primary）とのコントラストがほぼ無くなってしまうため、
+            // UIのprimaryとしては同系統でやや落ち着いたシアンにしている
+            primary: "#0891b2",
+            "primary-hover": "#06b6d4",
+            accent: "#ff70a7",
             "hero-bg": "#0d1526",
             "on-primary": "#f8fafc",
         },
@@ -97,19 +101,6 @@ export const SITE_THEMES: SiteTheme[] = [
         bonsaiGradient: ["#9333ea", "#ec4899"],
     },
 ];
-
-/**
- * キューブバッジの立方体6面（3色×対面複製）に使う色を、そのテーマの
- * bonsaiGradient から作る。木のグラデーションとキューブの見た目を揃えることで、
- * 「このテーマを選ぶと木も色も変わる」ことが一目でわかるようにしている。
- * bonsaiGradient が2色しかないテーマは1色目を繰り返して3色にする。
- */
-export function cubeColorsFromTheme(theme: SiteTheme): readonly [string, string, string] {
-    const [c0, c1, c2] = theme.bonsaiGradient;
-    if (c2 !== undefined) return [c0, c1, c2];
-    if (c1 !== undefined) return [c0, c1, c0];
-    return [theme.vars.primary, theme.vars.accent, theme.vars["primary-hover"]];
-}
 
 /**
  * <html> にインラインで CSS カスタムプロパティを設定する。
