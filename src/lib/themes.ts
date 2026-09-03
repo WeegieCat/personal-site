@@ -53,22 +53,17 @@ export const SITE_THEMES: SiteTheme[] = [
             foreground: "#0f172a",
             muted: "#64748b",
             border: "#e2e8f0",
-            // 木のmochiHoppeプリセット（黄・シアン・ピンク）をサイト全体の
-            // テーマカラーとして使う。背景が白なので on-primary は常に
-            // 濃い色でよく、primary/accent自体は元の鮮やかな色をそのまま使える
             primary: "#00f3ff",
             "primary-hover": "#00c2d1",
             accent: "#ff70a7",
             "hero-bg": "#f0fdff",
             "on-primary": "#111111",
         },
-        // 木の発光ノードは全テーマ共通でdustyGrassに統一
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
         id: "midnight",
         label: "Midnight",
-        // 以前 Default テーマだった黒＋青の配色を独立したテーマとして復活させたもの
         vars: {
             background: "#0b1220",
             surface: "#111a2e",
