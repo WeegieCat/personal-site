@@ -28,23 +28,6 @@ export interface SiteTheme {
 /** 右下のキューブバッジをクリックするたびにこの順で切り替わる */
 export const SITE_THEMES: SiteTheme[] = [
     {
-        id: "bubblegum",
-        label: "Bubblegum",
-        vars: {
-            background: "#faf5ff",
-            surface: "#f3e8ff",
-            foreground: "#3b0764",
-            muted: "#7e22ce",
-            border: "#d8b4fe",
-            primary: "#9333ea",
-            "primary-hover": "#a855f7",
-            accent: "#ec4899",
-            "hero-bg": "#f3e8ff",
-            "on-primary": "#111111",
-        },
-        bonsaiGradient: ["#d4fc79", "#96e6a1"],
-    },
-    {
         id: "default",
         label: "Default",
         vars: {
@@ -57,6 +40,23 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#00c2d1",
             accent: "#ff70a7",
             "hero-bg": "#f0fdff",
+            "on-primary": "#111111",
+        },
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
+    },
+    {
+        id: "bubblegum",
+        label: "Bubblegum",
+        vars: {
+            background: "#faf5ff",
+            surface: "#f3e8ff",
+            foreground: "#3b0764",
+            muted: "#7e22ce",
+            border: "#d8b4fe",
+            primary: "#9333ea",
+            "primary-hover": "#a855f7",
+            accent: "#ec4899",
+            "hero-bg": "#f3e8ff",
             "on-primary": "#111111",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
