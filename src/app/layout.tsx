@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import CubeBadge from "@/three/canvas/CubeBadge";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
 import { SiteThemeProvider } from "@/lib/theme-context";
 
@@ -41,6 +42,13 @@ export default function RootLayout({
                         <main className='flex-1 pt-16'>{children}</main>
                         <Footer />
                     </div>
+                    {/*
+                     * ヘッダーのテーマピッカーを廃止したため、このキューブが
+                     * テーマカラーを変える唯一の操作になった。fixed でビュー
+                     * ポート基準に固定し、どのページでもスクロールしても
+                     * 常に右下に留まるようにしている。
+                     */}
+                    <CubeBadge className='fixed right-6 bottom-6 z-50 h-16 w-16 sm:right-10 sm:bottom-10 sm:h-20 sm:w-20' />
                 </SiteThemeProvider>
             </body>
         </html>

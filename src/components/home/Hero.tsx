@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import CubeBadge from "@/three/canvas/CubeBadge";
 import { usePointerParallax } from "@/hooks/usePointerParallax";
 import { SITE_NAME } from "@/lib/site";
 
@@ -111,8 +110,6 @@ export default function Hero() {
                     <span className='text-sm sm:text-base'>scroll down</span>
                     <ArrowDownIcon />
                 </button>
-
-                <CubeBadge className='absolute right-6 bottom-6 z-10 h-16 w-16 sm:right-10 sm:bottom-10 sm:h-20 sm:w-20' />
             </div>
         </section>
     );
