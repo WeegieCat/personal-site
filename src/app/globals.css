@@ -64,12 +64,12 @@
 
 /*
  * ヒーローの「DEVEL(O)PER」の O に入る顔写真。
- * public/images/profile.jpg を置けばそのまま写真に切り替わり、
+ * public/images/profile.png を置けばそのまま写真に切り替わり、
  * 無い間は下のグラデーションが見えるので画像の割れが起きない。
  */
 .hero-photo {
     background-image:
-        url("/images/profile.jpg"),
+        url("/images/profile.png"),
         linear-gradient(135deg, var(--primary), var(--accent));
     background-size: cover, cover;
     background-position: center, center;
