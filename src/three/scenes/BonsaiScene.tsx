@@ -1,125 +1,119 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
 import { useMemo, useRef } from "react";
-import { Group, Quaternion, Vector3 } from "three";
+import { AdditiveBlending, Group, Vector3 } from "three";
 
-interface BranchData {
-    start: Vector3;
-    end: Vector3;
-    radius: number;
-}
-
-interface LeafData {
+interface NodeData {
     position: Vector3;
-    scale: number;
+    radius: number;
     color: string;
 }
 
-const LEAF_COLORS = ["#7c9473", "#93a97e", "#5f7a52", "#a3b88c"];
-const UP = new Vector3(0, 1, 0);
-const TILT_X = new Vector3(1, 0, 0);
-const TILT_Z = new Vector3(0, 0, 1);
+interface EdgeData {
+    start: Vector3;
+    end: Vector3;
+}
+
+const NODE_COLORS = ["#8bd17c", "#a3e08f", "#6fc766", "#c7e69a"];
+const ROOT_COLOR = "#d9e35c";
+const EDGE_COLOR = "#8b6f47";
 
 /**
- * Trie Bonsai（github.com/WeegieCat/trie-bonsai）はトライ木の分岐を
- * 3Dの盆栽として描画するプロダクト。その雰囲気を汲んだ簡易モックアップとして、
- * 再帰的に枝分かれする木を生成する（実プロダクトのレイアウトそのものではない）。
+ * Trie Bonsai（github.com/WeegieCat/trie-bonsai, https://2939976d.trie-bonsai.pages.dev/）
+ * のホーム画面で使われている、発光するノードを線で結んだグラフ表現を汲んだモックアップ。
+ * 実プロダクトの厳密な再現ではなく、トライ木の分岐をノード・エッジで
+ * 可視化するというコンセプトを表現したもの。
  */
-function generateTree(depth: number) {
-    const branches: BranchData[] = [];
-    const leaves: LeafData[] = [];
+function generateGraph(depth: number) {
+    const nodes: NodeData[] = [];
+    const edges: EdgeData[] = [];
 
     function recurse(
         origin: Vector3,
         direction: Vector3,
         length: number,
-        radius: number,
         remaining: number
     ) {
         const end = origin
             .clone()
             .add(direction.clone().multiplyScalar(length));
-        branches.push({ start: origin.clone(), end, radius });
+        edges.push({ start: origin.clone(), end });
+        nodes.push({
+            position: end,
+            radius: 0.05 + Math.random() * 0.03,
+            color: NODE_COLORS[Math.floor(Math.random() * NODE_COLORS.length)],
+        });
 
-        if (remaining === 0) {
-            leaves.push({
-                position: end,
-                scale: 0.3 + Math.random() * 0.2,
-                color: LEAF_COLORS[
-                    Math.floor(Math.random() * LEAF_COLORS.length)
-                ],
-            });
-            return;
-        }
+        if (remaining === 0) return;
 
-        const childCount = remaining > 2 ? 2 : 2 + Math.round(Math.random());
+        const childCount = remaining > 2 ? 2 : 1 + Math.round(Math.random() * 2);
         for (let i = 0; i < childCount; i++) {
-            const spread = 0.55;
+            const spread = 0.9;
             const newDirection = direction
                 .clone()
-                .applyAxisAngle(TILT_X, (Math.random() - 0.5) * spread)
-                .applyAxisAngle(TILT_Z, (Math.random() - 0.5) * spread)
+                .applyAxisAngle(new Vector3(1, 0, 0), (Math.random() - 0.5) * spread)
+                .applyAxisAngle(new Vector3(0, 1, 0), (Math.random() - 0.5) * spread)
+                .applyAxisAngle(new Vector3(0, 0, 1), (Math.random() - 0.3) * spread)
                 .normalize();
-            recurse(
-                end,
-                newDirection,
-                length * 0.72,
-                radius * 0.68,
-                remaining - 1
-            );
+            recurse(end, newDirection, length * 0.8, remaining - 1);
         }
     }
 
-    recurse(new Vector3(0, -1, 0), UP, 0.9, 0.09, depth);
-    return { branches, leaves };
+    const root = new Vector3(0, -1, 0);
+    nodes.push({ position: root, radius: 0.16, color: ROOT_COLOR });
+    recurse(root, new Vector3(0, 1, 0), 0.55, depth);
+
+    return { nodes, edges };
 }
 
-function Branch({ start, end, radius }: BranchData) {
-    const direction = useMemo(() => end.clone().sub(start), [start, end]);
-    const length = direction.length();
-    const midpoint = useMemo(
-        () => start.clone().add(end).multiplyScalar(0.5),
-        [start, end]
-    );
-    const quaternion = useMemo(() => {
-        const q = new Quaternion();
-        q.setFromUnitVectors(UP, direction.clone().normalize());
-        return q;
-    }, [direction]);
-
+function GlowNode({ position, radius, color }: NodeData) {
     return (
-        <mesh position={midpoint} quaternion={quaternion}>
-            <cylinderGeometry args={[radius * 0.6, radius, length, 6]} />
-            <meshStandardMaterial color='#6b4a34' roughness={0.9} />
-        </mesh>
+        <group position={position}>
+            {/* 発光の芯 */}
+            <mesh>
+                <sphereGeometry args={[radius, 12, 12]} />
+                <meshBasicMaterial color={color} toneMapped={false} />
+            </mesh>
+            {/* postprocessing無しでの簡易ブルーム表現。加算合成の半透明な大きい球を重ねる */}
+            <mesh scale={2.4}>
+                <sphereGeometry args={[radius, 12, 12]} />
+                <meshBasicMaterial
+                    color={color}
+                    transparent
+                    opacity={0.25}
+                    blending={AdditiveBlending}
+                    depthWrite={false}
+                    toneMapped={false}
+                />
+            </mesh>
+        </group>
     );
 }
 
-function LeafCluster({ position, scale, color }: LeafData) {
-    return (
-        <mesh position={position} scale={scale}>
-            <icosahedronGeometry args={[1, 0]} />
-            <meshStandardMaterial color={color} roughness={0.8} flatShading />
-        </mesh>
-    );
-}
-
-function Tree() {
+function Graph() {
     const groupRef = useRef<Group>(null);
-    const { branches, leaves } = useMemo(() => generateTree(4), []);
+    const { nodes, edges } = useMemo(() => generateGraph(4), []);
 
     useFrame((_, delta) => {
-        if (groupRef.current) groupRef.current.rotation.y += delta * 0.25;
+        if (groupRef.current) groupRef.current.rotation.y += delta * 0.2;
     });
 
     return (
         <group ref={groupRef}>
-            {branches.map((branch, i) => (
-                <Branch key={i} {...branch} />
+            {edges.map((edge, i) => (
+                <Line
+                    key={i}
+                    points={[edge.start, edge.end]}
+                    color={EDGE_COLOR}
+                    lineWidth={1.4}
+                    transparent
+                    opacity={0.55}
+                />
             ))}
-            {leaves.map((leaf, i) => (
-                <LeafCluster key={i} {...leaf} />
+            {nodes.map((node, i) => (
+                <GlowNode key={i} {...node} />
             ))}
         </group>
     );
@@ -127,10 +121,11 @@ function Tree() {
 
 export default function BonsaiScene() {
     return (
-        <Canvas camera={{ position: [2.2, 1.4, 2.6], fov: 40 }} dpr={[1, 2]}>
-            <ambientLight intensity={0.8} />
-            <directionalLight position={[3, 4, 2]} intensity={1.6} />
-            <Tree />
+        <Canvas camera={{ position: [0, 0.1, 3], fov: 42 }} dpr={[1, 2]}>
+            {/* 参考にしたホーム画面のように暗い背景で発光を映えさせる。
+                サイトのテーマ配色に関わらず固定（スクリーンショット的な位置づけのため） */}
+            <color attach='background' args={["#05070a"]} />
+            <Graph />
         </Canvas>
     );
 }

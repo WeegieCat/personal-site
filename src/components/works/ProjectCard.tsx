@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Project } from "@/types";
 import BonsaiPreview from "@/three/canvas/BonsaiPreview";
 
@@ -10,20 +11,24 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     return (
         <article className='group overflow-hidden rounded-lg border border-border bg-background transition-shadow duration-300 hover:shadow-lg'>
             {project.slug === "trie-bonsai" ? (
-                <div className='relative h-48 overflow-hidden bg-surface'>
+                <Link
+                    href={`/works/${project.slug}`}
+                    className='relative block h-48 overflow-hidden bg-surface'>
                     <BonsaiPreview className='h-full w-full' />
-                </div>
+                </Link>
             ) : (
                 project.image && (
-                    <div className='relative h-48 overflow-hidden bg-surface'>
+                    <Link
+                        href={`/works/${project.slug}`}
+                        className='relative block h-48 overflow-hidden bg-surface'>
                         <Image
                             src={project.image}
                             alt={project.title}
                             fill
                             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                            className='object-cover transition-transform duration-300 group-hover:scale-105'
+                            className='object-contain transition-transform duration-300 group-hover:scale-105'
                         />
-                    </div>
+                    </Link>
                 )
             )}
 
