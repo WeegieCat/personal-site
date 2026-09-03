@@ -50,16 +50,16 @@ export default function Hero() {
     const scrollButtonRef = useRef<HTMLButtonElement>(null);
     const wordmarkRef = useRef<HTMLDivElement>(null);
     const interestedRef = useRef<HTMLButtonElement>(null);
-    const cubeRef = useRef<HTMLDivElement>(null);
 
-    // 数値が大きいほど手前にあるように見える（動く量が大きい）
+    // 数値が大きいほど手前にあるように見える（動く量が大きい）。
+    // 右下のキューブバッジはクリックで色を変える操作対象なので、
+    // パララックスでは動かさずレイヤーに含めない。
     usePointerParallax(containerRef, [
         { ref: circleRef, strength: 20 },
         { ref: introRef, strength: 12 },
         { ref: scrollButtonRef, strength: 10 },
         { ref: wordmarkRef, strength: 28 },
         { ref: interestedRef, strength: 16 },
-        { ref: cubeRef, strength: 24 },
     ]);
 
     return (
@@ -135,11 +135,7 @@ export default function Hero() {
                     <ArrowDownIcon />
                 </button>
 
-                <div
-                    ref={cubeRef}
-                    className='absolute right-6 bottom-6 z-10 h-16 w-16 sm:right-10 sm:bottom-10 sm:h-20 sm:w-20'>
-                    <CubeBadge className='h-full w-full' />
-                </div>
+                <CubeBadge className='absolute right-6 bottom-6 z-10 h-16 w-16 sm:right-10 sm:bottom-10 sm:h-20 sm:w-20' />
             </div>
         </section>
     );

@@ -4,19 +4,14 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import type { Mesh } from "three";
 
-// three.js からは CSS 変数を読めないため、globals.css の primary / accent と
-// 対応する値をここに持つ。テーマ色を変えたときはこちらも合わせること。
-const FACE_COLORS = [
-    "#2563eb",
-    "#7c3aed",
-    "#60a5fa",
-    "#2563eb",
-    "#7c3aed",
-    "#60a5fa",
-];
+interface CubeSceneProps {
+    /** 立方体の6面に使う3色。対面が同じ色になるよう内部で複製する */
+    colors: readonly [string, string, string];
+}
 
-function Cube() {
+function Cube({ colors }: CubeSceneProps) {
     const ref = useRef<Mesh>(null);
+    const faceColors = [...colors, ...colors];
 
     useFrame((_, delta) => {
         if (!ref.current) return;
@@ -27,7 +22,7 @@ function Cube() {
     return (
         <mesh ref={ref}>
             <boxGeometry args={[1.5, 1.5, 1.5]} />
-            {FACE_COLORS.map((color, i) => (
+            {faceColors.map((color, i) => (
                 <meshStandardMaterial
                     key={i}
                     attach={`material-${i}`}
@@ -40,12 +35,12 @@ function Cube() {
     );
 }
 
-export default function CubeScene() {
+export default function CubeScene({ colors }: CubeSceneProps) {
     return (
         <Canvas camera={{ position: [2.4, 2, 2.4], fov: 40 }} dpr={[1, 2]}>
             <ambientLight intensity={1.2} />
             <directionalLight position={[3, 4, 2]} intensity={2.5} />
-            <Cube />
+            <Cube colors={colors} />
         </Canvas>
     );
 }
