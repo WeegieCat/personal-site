@@ -8,7 +8,7 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <header className='absolute top-0 right-0 z-50 p-6 sm:p-10'>
+        <header className='fixed top-0 right-0 z-50 p-6 sm:p-10'>
             <nav className='flex items-center gap-3 text-sm font-bold tracking-wide uppercase'>
                 {navItems.map((item, index) => (
                     <span key={item.href} className='flex items-center gap-3'>
