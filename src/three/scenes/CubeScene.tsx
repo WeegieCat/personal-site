@@ -1,7 +1,7 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useRef, useState } from "react";
 import type { Mesh } from "three";
 
 interface CubeSceneProps {
@@ -35,12 +35,40 @@ function Cube({ colors }: CubeSceneProps) {
     );
 }
 
+/**
+ * マウント直後の1〜2フレームはmeshStandardMaterialのシェーダーコンパイルが
+ * 終わっておらず、キューブが歪んだ単色の塊に見えることがある。
+ * シーンが揃った状態で明示的にコンパイルしてから onReady で表示許可を出す。
+ */
+function ShaderWarmup({ onReady }: { onReady: () => void }) {
+    const { gl, scene, camera } = useThree();
+    const warmed = useRef(false);
+
+    useFrame(() => {
+        if (warmed.current) return;
+        warmed.current = true;
+        gl.compile(scene, camera);
+        onReady();
+    });
+
+    return null;
+}
+
 export default function CubeScene({ colors }: CubeSceneProps) {
+    const [ready, setReady] = useState(false);
+
     return (
-        <Canvas camera={{ position: [2.4, 2, 2.4], fov: 40 }} dpr={[1, 2]}>
+        <Canvas
+            camera={{ position: [2.4, 2, 2.4], fov: 40 }}
+            dpr={[1, 2]}
+            style={{
+                opacity: ready ? 1 : 0,
+                transition: "opacity 200ms ease-out",
+            }}>
             <ambientLight intensity={1.2} />
             <directionalLight position={[3, 4, 2]} intensity={2.5} />
             <Cube colors={colors} />
+            <ShaderWarmup onReady={() => setReady(true)} />
         </Canvas>
     );
 }
