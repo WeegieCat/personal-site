@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import dynamic from "next/dynamic";
-import { applySiteTheme, SITE_THEMES } from "@/lib/themes";
+import { SITE_THEMES } from "@/lib/themes";
+import { useSiteTheme } from "@/lib/theme-context";
 
 /**
  * three.js はバンドルが大きく WebGL はブラウザでしか動かないため ssr: false で遅延読み込みする。
@@ -15,13 +15,11 @@ const CubeScene = dynamic(() => import("@/three/scenes/CubeScene"), {
 });
 
 export default function CubeBadge({ className = "" }: { className?: string }) {
-    const [themeIndex, setThemeIndex] = useState(0);
+    const { themeIndex, setThemeIndex } = useSiteTheme();
     const theme = SITE_THEMES[themeIndex];
 
     const handleClick = () => {
-        const nextIndex = (themeIndex + 1) % SITE_THEMES.length;
-        setThemeIndex(nextIndex);
-        applySiteTheme(SITE_THEMES[nextIndex]);
+        setThemeIndex((themeIndex + 1) % SITE_THEMES.length);
     };
 
     return (

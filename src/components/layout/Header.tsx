@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "./navItems";
 import Container from "@/components/ui/Container";
+import ThemePicker from "./ThemePicker";
 import { SITE_INITIAL, SITE_NAME } from "@/lib/site";
 
 export default function Header() {
@@ -41,29 +42,32 @@ export default function Header() {
                         ))}
                     </nav>
 
-                    <button
-                        type='button'
-                        aria-label='メニューを開閉する'
-                        aria-expanded={isOpen}
-                        className='inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface md:hidden'
-                        onClick={() => setIsOpen(!isOpen)}>
-                        <svg
-                            className='h-6 w-6'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth={2}
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            viewBox='0 0 24 24'>
-                            <path
-                                d={
-                                    isOpen
-                                        ? "M6 18L18 6M6 6l12 12"
-                                        : "M4 6h16M4 12h16M4 18h16"
-                                }
-                            />
-                        </svg>
-                    </button>
+                    <div className='flex items-center gap-2'>
+                        <ThemePicker />
+                        <button
+                            type='button'
+                            aria-label='メニューを開閉する'
+                            aria-expanded={isOpen}
+                            className='inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface md:hidden'
+                            onClick={() => setIsOpen(!isOpen)}>
+                            <svg
+                                className='h-6 w-6'
+                                fill='none'
+                                stroke='currentColor'
+                                strokeWidth={2}
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                viewBox='0 0 24 24'>
+                                <path
+                                    d={
+                                        isOpen
+                                            ? "M6 18L18 6M6 6l12 12"
+                                            : "M4 6h16M4 12h16M4 18h16"
+                                    }
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 {isOpen && (

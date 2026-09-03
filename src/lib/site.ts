@@ -2,6 +2,6 @@
 export const SITE_NAME = "Keita Yamanouchi";
 export const SITE_INITIAL = "K";
 export const SITE_TAGLINE = "Playful Developer";
-export const SITE_EMAIL = "feynman.diagram.511@gmail.com";
+export const SITE_EMAIL = "weegieluke@gmail.com";
 export const GITHUB_URL = "https://github.com/WeegieCat";
 export const QIITA_URL = "https://qiita.com/feynman_1729";
