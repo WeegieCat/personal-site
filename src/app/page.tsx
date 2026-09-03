@@ -1,60 +1,21 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import Hero from "@/components/home/Hero";
 import ProjectCard from "@/components/works/ProjectCard";
-import HeroCanvas from "@/three/canvas/HeroCanvas";
 import { featuredProjects, skills } from "@/content/projects";
 
 // Header / Footer は app/layout.tsx が描画するのでここでは呼ばない
 export default function HomePage() {
     return (
         <>
-            <section className='py-20'>
-                <Container size='wide'>
-                    <div className='grid items-center gap-12 md:grid-cols-2'>
-                        <div className='animate-fade'>
-                            <h1 className='mb-6 text-5xl font-bold sm:text-6xl'>
-                                <span className='gradient-text'>
-                                    Web Engineer
-                                </span>
-                                <br />
-                                <span>&amp; Creative Developer</span>
-                            </h1>
+            <Hero />
 
-                            <p className='mb-8 text-lg leading-relaxed text-muted'>
-                                Next.js、TypeScript、Tailwind CSS
-                                を使った高速で拡張性の高いウェブサイト・アプリケーション開発。
-                                Cloudflare Workers
-                                でのサーバーレス実装も得意です。
-                            </p>
-
-                            <div className='flex flex-col gap-4 sm:flex-row'>
-                                <Link
-                                    href='/works'
-                                    className='rounded-lg bg-primary px-8 py-3 text-center font-semibold text-white transition-colors hover:bg-primary-hover'>
-                                    プロジェクトを見る
-                                </Link>
-                                <Link
-                                    href='/inquiry'
-                                    className='rounded-lg border border-border px-8 py-3 text-center font-semibold transition-colors hover:bg-surface'>
-                                    お問い合わせ
-                                </Link>
-                            </div>
-                        </div>
-
-                        <HeroCanvas className='h-72 w-full md:h-96' />
-                    </div>
-                </Container>
-            </section>
-
-            <section className='bg-surface py-20'>
+            <section id='hero-next' className='bg-surface py-20'>
                 <Container size='wide'>
                     <div className='mb-16 text-center'>
                         <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
                             Featured Projects
                         </h2>
-                        <p className='text-lg text-muted'>
-                            最新の技術スタックで実装した注目プロジェクト。
-                        </p>
                     </div>
 
                     <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
