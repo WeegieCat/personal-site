@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
@@ -31,17 +30,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='ja' suppressHydrationWarning>
+        <html lang='ja'>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-                <ThemeProvider>
-                    <div className='flex min-h-screen flex-col'>
-                        <Header />
-                        {/* Header が fixed のぶん本文を押し下げる（旧: 各ページの pt-20） */}
-                        <main className='flex-1 pt-16'>{children}</main>
-                        <Footer />
-                    </div>
-                </ThemeProvider>
+                <div className='flex min-h-screen flex-col'>
+                    <Header />
+                    {/* Header が fixed のぶん本文を押し下げる（旧: 各ページの pt-20） */}
+                    <main className='flex-1 pt-16'>{children}</main>
+                    <Footer />
+                </div>
             </body>
         </html>
     );
