@@ -17,6 +17,8 @@
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
     --accent: #7c3aed;
+    /* ヒーローのポスター面。primary/accent の図形が映える淡い下地 */
+    --hero-bg: #eaeefb;
 }
 
 .dark {
@@ -28,6 +30,7 @@
     --primary: #3b82f6;
     --primary-hover: #60a5fa;
     --accent: #a78bfa;
+    --hero-bg: #0d1526;
 }
 
 /*
@@ -43,6 +46,7 @@
     --color-primary: var(--primary);
     --color-primary-hover: var(--primary-hover);
     --color-accent: var(--accent);
+    --color-hero-bg: var(--hero-bg);
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
@@ -70,6 +74,29 @@
     );
     background-clip: text;
     color: transparent;
+}
+
+/*
+ * ヒーローの「DEVEL(O)PER」の O に入る顔写真。
+ * public/images/profile.jpg を置けばそのまま写真に切り替わり、
+ * 無い間は下のグラデーションが見えるので画像の割れが起きない。
+ */
+.hero-photo {
+    background-image:
+        url("/images/profile.jpg"),
+        linear-gradient(135deg, var(--primary), var(--accent));
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+}
+
+/* ヒーローのワードマークで文字の代わりに使う三角形（A / V の置き換え） */
+.tri-up {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tri-down {
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
 }
 
 html {

@@ -48,3 +48,6 @@ build/
 # 静的出力 / Cloudflare
 /out/
 .wrangler/
+
+# Claude Code のセッション用worktree（別リポジトリとして誤コミットされるため除外）
+/.claude/worktrees/
