@@ -16,8 +16,15 @@ export default function Header() {
     return (
         <header className='fixed top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md'>
             <Container size='wide'>
-                <div className='flex h-16 items-center justify-between'>
-                    <Link href='/' className='flex items-center gap-2'>
+                {/*
+                 * flex + justify-between だと、左（ロゴ+名前）と右
+                 * （テーマピッカー+ハンバーガー）の幅が違うぶんだけ
+                 * 中央のnavが真ん中からズレる。左右を等幅の1frにして
+                 * navを中央カラムに置くことで、幅の差に関係なく
+                 * 常にヘッダー全体の中央に揃う。
+                 */}
+                <div className='grid h-16 grid-cols-[1fr_auto_1fr] items-center'>
+                    <Link href='/' className='flex items-center gap-2 justify-self-start'>
                         <div className='relative h-8 w-8 overflow-hidden rounded-lg'>
                             <Image
                                 src='/images/profile.png'
@@ -47,7 +54,7 @@ export default function Header() {
                         ))}
                     </nav>
 
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center justify-self-end gap-2'>
                         <ThemePicker />
                         <button
                             type='button'
