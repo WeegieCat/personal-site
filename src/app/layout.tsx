@@ -33,15 +33,6 @@ export default function RootLayout({
         <html lang='ja' suppressHydrationWarning>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-                {/*
-                 * 描画前に同期実行して、セッション内で表示済みならローダーを
-                 * 一度も描画させない（リピート訪問時のチラつき防止）。
-                 */}
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `try{if(sessionStorage.getItem("preloader:shown"))document.documentElement.dataset.preloader="done"}catch(e){}`,
-                    }}
-                />
                 <ThemeProvider>
                     <div className='flex min-h-screen flex-col'>
                         <Header />
