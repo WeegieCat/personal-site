@@ -99,6 +99,19 @@ export const SITE_THEMES: SiteTheme[] = [
 ];
 
 /**
+ * キューブバッジの立方体6面（3色×対面複製）に使う色を、そのテーマの
+ * bonsaiGradient から作る。木のグラデーションとキューブの見た目を揃えることで、
+ * 「このテーマを選ぶと木も色も変わる」ことが一目でわかるようにしている。
+ * bonsaiGradient が2色しかないテーマは1色目を繰り返して3色にする。
+ */
+export function cubeColorsFromTheme(theme: SiteTheme): readonly [string, string, string] {
+    const [c0, c1, c2] = theme.bonsaiGradient;
+    if (c2 !== undefined) return [c0, c1, c2];
+    if (c1 !== undefined) return [c0, c1, c0];
+    return [theme.vars.primary, theme.vars.accent, theme.vars["primary-hover"]];
+}
+
+/**
  * <html> にインラインで CSS カスタムプロパティを設定する。
  * globals.css の :root 定義より優先されるため、サイト全体の配色が即座に切り替わる。
  */
