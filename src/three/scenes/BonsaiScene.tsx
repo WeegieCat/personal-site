@@ -17,9 +17,11 @@ interface EdgeData {
     end: Vector3;
 }
 
-// github.com/WeegieCat/trie-bonsai の AnimatedBonsai.tsx に実装されている
-// ノード配置のロジック（ルート1 + 円状に5本の枝 + 各枝から2つの子）をそのまま移植し、
-// SceneContent.tsx の配色・マテリアル・Bloom設定を踏襲している。
+// 配色・マテリアル・Bloom設定は github.com/WeegieCat/trie-bonsai の
+// SceneContent.tsx の既定値を踏襲している（ここは変更しない）。
+// ノード配置は元実装（AnimatedBonsai.tsx）の円状5分岐だと、固定カメラの
+// プレビューでは枝が交差して絡まって見えるため、正面から見て交差しない
+// 扇状の樹形に独自に組み替えている。
 const EDGE_COLOR = "#8b7355";
 // nodeGradientPreset: "dustyGrass"（既定値）
 const GRADIENT_STOPS = ["#d4fc79", "#96e6a1"];
@@ -33,27 +35,61 @@ function colorFromGradient(ratio: number): Color {
 }
 
 function generateBonsaiLayout() {
-    const nodes: NodeData[] = [{ position: new Vector3(0, 0, 0), size: 1.5, y: 0 }];
+    const nodes: NodeData[] = [];
     const edges: EdgeData[] = [];
-    const root = nodes[0].position;
 
-    for (let i = 0; i < 5; i++) {
-        const angle = (i / 5) * Math.PI * 2;
-        const x = Math.cos(angle) * 3;
-        const z = Math.sin(angle) * 3;
-        const branch = new Vector3(x, 2, z);
+    // 根本。ここだけ大きく明るく光らせる
+    const root = new Vector3(0, 0, 0);
+    nodes.push({ position: root, size: 1.5, y: 0 });
 
-        nodes.push({ position: branch, size: 1, y: 2 });
-        edges.push({ start: root, end: branch });
+    // 幹。根本からまっすぐ立ち上がり、ここから枝が扇状に分かれる
+    const crown = new Vector3(0, 1.4, 0);
+    nodes.push({ position: crown, size: 1, y: crown.y });
+    edges.push({ start: root, end: crown });
 
-        for (let j = 0; j < 2; j++) {
-            const subAngle = angle + (j - 0.5) * 0.8;
-            const subX = Math.cos(subAngle) * 2 + x;
-            const subZ = Math.sin(subAngle) * 2 + z;
-            const leaf = new Vector3(subX, 4, subZ);
+    // 扇の開き角。左右対称の範囲に均等配置してから微小に揺らし、
+    // 枝同士が交差しない程度のばらつきに留める
+    const branchCount = 7;
+    const fanSpread = (100 * Math.PI) / 180;
 
-            nodes.push({ position: leaf, size: 0.7, y: 4 });
-            edges.push({ start: branch, end: leaf });
+    for (let i = 0; i < branchCount; i++) {
+        const t = i / (branchCount - 1) - 0.5;
+        const angle = t * fanSpread + (Math.random() - 0.5) * 0.1;
+        const length = 1.1 + Math.random() * 0.45;
+
+        const direction = new Vector3(
+            Math.sin(angle),
+            Math.cos(angle) * 0.85 + 0.35,
+            (Math.random() - 0.5) * 0.15
+        ).normalize();
+        const tip = crown.clone().add(direction.clone().multiplyScalar(length));
+        edges.push({ start: crown, end: tip });
+
+        // 半数程度はもう一段伸ばし、枝の長さに変化をつける
+        if (Math.random() > 0.45) {
+            nodes.push({ position: tip, size: 0.5, y: tip.y });
+
+            const subDirection = direction
+                .clone()
+                .applyAxisAngle(new Vector3(0, 0, 1), (Math.random() - 0.5) * 0.35)
+                .normalize();
+            const subLength = 0.5 + Math.random() * 0.35;
+            const subTip = tip
+                .clone()
+                .add(subDirection.multiplyScalar(subLength));
+
+            edges.push({ start: tip, end: subTip });
+            nodes.push({
+                position: subTip,
+                size: 0.65 + Math.random() * 0.25,
+                y: subTip.y,
+            });
+        } else {
+            nodes.push({
+                position: tip,
+                size: 0.7 + Math.random() * 0.3,
+                y: tip.y,
+            });
         }
     }
 
@@ -63,8 +99,10 @@ function generateBonsaiLayout() {
 function Bonsai() {
     const groupRef = useRef<Group>(null);
     const { nodes, edges } = useMemo(() => generateBonsaiLayout(), []);
-    const minY = 0;
-    const maxY = 4;
+    const { minY, maxY } = useMemo(() => {
+        const ys = nodes.map((n) => n.y);
+        return { minY: Math.min(...ys), maxY: Math.max(...ys) };
+    }, [nodes]);
 
     // 枝が5本、円周上に72度間隔で並んでいるため、連続で1回転させると
     // 枝どうしが正面から重なって見える角度を必ず通過し、絡まって見える瞬間が出る。
@@ -107,7 +145,7 @@ function Bonsai() {
 
 export default function BonsaiScene() {
     return (
-        <Canvas camera={{ position: [-3.5, 3, 5], fov: 40 }} dpr={[1, 2]}>
+        <Canvas camera={{ position: [0.6, 1.8, 5], fov: 38 }} dpr={[1, 2]}>
             {/* SceneContentのbackgroundColor既定値 */}
             <color attach='background' args={["#1a1a1a"]} />
             <ambientLight intensity={0.5} />
