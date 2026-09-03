@@ -1,0 +1,6 @@
+# src/app/icon.tsx が生成する /icon は拡張子が無いファイルとして出力される。
+# Cloudflare Workers の静的アセット配信はファイルの拡張子からMIMEタイプを
+# 決めるため、このままだと image/png が付与されずブラウザがファビコンとして
+# 認識しない可能性がある。明示的に Content-Type を指定する。
+/icon
+  Content-Type: image/png

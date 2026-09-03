@@ -11,12 +11,7 @@ export default function Footer() {
         <footer className='border-t border-border bg-surface text-foreground'>
             <Container
                 size='wide'
-                /*
-                 * 右下に fixed 表示のキューブバッジ(sm以上は right-10 幅80px)
-                 * と重なるぶん、sm以上でのみ右側に余白を確保する。
-                 * モバイルは flex-col で中央寄せになり衝突しないため不要。
-                 */
-                className='flex flex-col items-center justify-between gap-4 py-8 sm:flex-row sm:pr-32'>
+                className='flex flex-col items-center justify-between gap-4 py-8 sm:flex-row'>
                 <a
                     href={`mailto:${SITE_EMAIL}`}
                     className='hv-underline text-sm text-muted'>
