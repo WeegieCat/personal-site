@@ -2,18 +2,18 @@
 
 /* ダーク/ライトの切り替えは廃止し、この配色に固定する */
 :root {
-    --background: #0b1220;
-    --surface: #111a2e;
-    --foreground: #f1f5f9;
-    --muted: #94a3b8;
-    --border: #1f2937;
-    /* 木のmochiHoppe配色（シアン・ピンク）の方向で揃えつつ、白文字との
-     * コントラストを保てる明るさに調整している（詳細はthemes.tsのコメント参照） */
-    --primary: #0891b2;
-    --primary-hover: #06b6d4;
+    --background: #ffffff;
+    --surface: #ecfeff;
+    --foreground: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    /* 木のmochiHoppeプリセット（黄・シアン・ピンク）をサイト全体の
+     * テーマカラーとして使う（詳細はthemes.tsのコメント参照） */
+    --primary: #00f3ff;
+    --primary-hover: #00c2d1;
     --accent: #ff70a7;
     /* ヒーローのポスター面。primary/accent の図形が映える下地 */
-    --hero-bg: #0d1526;
+    --hero-bg: #f0fdff;
     /*
      * primary色の円やボタンの「上に乗る」文字専用の色。
      * --foreground はテーマによって明にも暗にもなるため、
@@ -21,7 +21,7 @@
      * 配色次第で背景色と同化して読めなくなることがある。
      * ワードマークなど primary の上に重なる文字は必ずこちらを使う。
      */
-    --on-primary: #f8fafc;
+    --on-primary: #111111;
 }
 
 @theme inline {
@@ -127,7 +127,7 @@ body {
 
 ::selection {
     background-color: var(--primary);
-    color: #ffffff;
+    color: var(--on-primary);
 }
 
 /* MDX 記事本文。生成されたHTMLに直接クラスを付けられないため子孫セレクタで当てる */
