@@ -7,32 +7,33 @@ import { Project } from "@/types";
  */
 export const projects: Project[] = [
     {
-        id: "1",
-        slug: "e-commerce-platform",
-        title: "E-Commerce Platform",
+        id: "trie-bonsai",
+        slug: "trie-bonsai",
+        title: "Trie Bonsai",
         description:
-            "Next.js + Tailwind CSS + TypeScript で構築した高速なECサイト。Cloudflare Workers でバックエンド処理を実装。",
-        tags: ["Next.js", "TypeScript", "Tailwind CSS", "Cloudflare"],
+            "入力文字列をトライ木・パトリシア木・接尾辞木の3種類から選択して解析し、3Dの盆栽風アート作品として可視化するWebプロダクト。作品の保存・共有・ギャラリー閲覧機能を備える。150人規模のサークルが開催した個人制作クリエイタソンで2位を受賞。",
+        tags: [
+            "Next.js",
+            "React Three Fiber",
+            "TypeScript",
+            "Zustand",
+            "Cloudflare",
+            "Hono",
+        ],
+        link: "https://2939976d.trie-bonsai.pages.dev/",
+        github: "https://github.com/WeegieCat/trie-bonsai",
         featured: true,
-        year: 2025,
+        year: 2026,
     },
     {
-        id: "2",
-        slug: "realtime-chat",
-        title: "Real-time Chat Application",
+        id: "aruke-ru",
+        slug: "aruke-ru",
+        title: "アルケール",
         description:
-            "WebSocket を使用したリアルタイムチャットアプリケーション。React + Node.js で実装し、数千のコネクションを処理可能。",
-        tags: ["React", "Node.js", "WebSocket", "MongoDB"],
-        featured: true,
-        year: 2025,
-    },
-    {
-        id: "3",
-        slug: "design-system",
-        title: "Design System Component Library",
-        description:
-            "再利用可能な UI コンポーネントライブラリ。Storybook で管理し、Tailwind CSS で統一されたデザイン。",
-        tags: ["React", "TypeScript", "Tailwind CSS", "Storybook"],
+            "車イス利用者・高齢者・ランナーなど7属性の多様なニーズに合わせ、最適な経路を提案する歩行者向け地図アプリ。開発未経験者を含む4人チームのリーダー兼バックエンド・PM担当として牽引した。第13回e-ZUKAスマートアプリコンテスト2024 トヨタ自動車九州株式会社賞、九州アプリチャレンジ・キャラバン 特別賞を受賞。",
+        tags: ["Flutter", "Firebase", "Google Maps Platform"],
+        link: "https://aruke-ru-v2.web.app/",
+        github: "https://github.com/giant-shrimp/Chikuhou_frontend",
         featured: true,
         year: 2024,
     },
@@ -41,7 +42,21 @@ export const projects: Project[] = [
 export const featuredProjects = projects.filter((p) => p.featured);
 
 export const skills = {
-    Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "React Three Fiber"],
-    Backend: ["Node.js", "Express", "PostgreSQL", "MongoDB", "REST API"],
-    "Tools & Deployment": ["Git", "Docker", "Cloudflare Workers", "GitHub"],
+    Languages: ["TypeScript", "JavaScript", "Dart", "C++", "Python", "C"],
+    "Frameworks & Libraries": [
+        "Next.js",
+        "React",
+        "React Three Fiber",
+        "Zustand",
+        "Tailwind CSS",
+        "Flutter",
+        "Hono",
+        "Drizzle ORM",
+    ],
+    "Infra & Platforms": [
+        "Cloudflare (Workers/R2/D1)",
+        "Firebase",
+        "Google Maps Platform",
+        "Arduino",
+    ],
 } as const;

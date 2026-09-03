@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/ui/Container";
+import { GITHUB_URL, QIITA_URL, SITE_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
     title: "Contact",
@@ -8,9 +9,19 @@ export const metadata: Metadata = {
 
 const contacts = [
     {
+        label: "Email",
+        value: SITE_EMAIL,
+        href: `mailto:${SITE_EMAIL}`,
+    },
+    {
         label: "GitHub",
         value: "@WeegieCat",
-        href: "https://github.com/WeegieCat",
+        href: GITHUB_URL,
+    },
+    {
+        label: "Qiita",
+        value: "@feynman_1729",
+        href: QIITA_URL,
     },
 ];
 
@@ -32,8 +43,10 @@ export default function InquiryPage() {
                         <span className='font-semibold'>{contact.label}</span>
                         <a
                             href={contact.href}
-                            target='_blank'
-                            rel='noopener noreferrer'
+                            {...(contact.href.startsWith("http") && {
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                            })}
                             className='text-primary transition-colors hover:text-primary-hover'>
                             {contact.value}
                         </a>

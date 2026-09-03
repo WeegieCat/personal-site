@@ -3,6 +3,8 @@ import Container from "@/components/ui/Container";
 import Hero from "@/components/home/Hero";
 import ProjectCard from "@/components/works/ProjectCard";
 import { featuredProjects, skills } from "@/content/projects";
+import { affiliation, selfPr } from "@/content/profile";
+import { SITE_NAME } from "@/lib/site";
 
 // Header / Footer は app/layout.tsx が描画するのでここでは呼ばない
 export default function HomePage() {
@@ -10,7 +12,24 @@ export default function HomePage() {
         <>
             <Hero />
 
-            <section id='hero-next' className='bg-surface py-20'>
+            <section id='hero-next' className='py-20'>
+                <Container size='default'>
+                    <div className='mb-12'>
+                        <h2 className='mb-2 text-4xl font-bold sm:text-5xl'>
+                            About {SITE_NAME}
+                        </h2>
+                        <p className='text-lg text-muted'>{affiliation}</p>
+                    </div>
+
+                    <div className='space-y-6 leading-relaxed text-foreground'>
+                        {selfPr.map((paragraph, i) => (
+                            <p key={i}>{paragraph}</p>
+                        ))}
+                    </div>
+                </Container>
+            </section>
+
+            <section className='bg-surface py-20'>
                 <Container size='wide'>
                     <div className='mb-16 text-center'>
                         <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
@@ -21,7 +40,7 @@ export default function HomePage() {
                         </p>
                     </div>
 
-                    <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                    <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2'>
                         {featuredProjects.map((project) => (
                             <ProjectCard key={project.id} project={project} />
                         ))}

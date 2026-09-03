@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -16,12 +17,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    // 各ページは title だけを定義すれば "<title> | Feynman" になる
+    // 各ページは title だけを定義すれば `<title> | ${SITE_NAME}` になる
     title: {
-        default: "Feynman",
-        template: "%s | Feynman",
+        default: SITE_NAME,
+        template: `%s | ${SITE_NAME}`,
     },
-    description: "Web Engineer & Creative Developer のポートフォリオサイト",
+    description: `${SITE_TAGLINE} のポートフォリオサイト`,
 };
 
 export default function RootLayout({
