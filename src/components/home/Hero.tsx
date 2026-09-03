@@ -77,7 +77,7 @@ export default function Hero() {
 
                 {/* 実際のページ見出しはこちら。視覚的な表現はすべて装飾として下に重ねる */}
                 <h1 className='sr-only'>
-                    Hi, I&apos;m {SITE_NAME} — a Creative Developer
+                    Hi, I&apos;m {SITE_NAME} — a Playful Developer
                 </h1>
 
                 <div ref={introRef} className='relative z-10 max-w-xs'>
@@ -101,7 +101,7 @@ export default function Hero() {
                 </button>
 
                 {/*
-                 * CREATIVE DEVELOPER のワードマーク。A/V を三角形、O を顔写真に置き換えた装飾表現。
+                 * PLAYFUL DEVELOPER のワードマーク。A/V を三角形、O を顔写真に置き換えた装飾表現。
                  * パララックスの translate は外側の div が担い、静的な -rotate-6 は内側の div に
                  * 分離している（同じ要素に両方を inline transform と Tailwind の transform
                  * ユーティリティで持たせると inline 側が上書きしてしまうため）。
@@ -112,9 +112,9 @@ export default function Hero() {
                     className='relative z-10 mx-auto mt-20 max-w-4xl sm:mt-28'>
                     <div className='flex -rotate-6 flex-col items-center gap-1'>
                         <div className='flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
-                            <span>CRE</span>
+                            <span>PL</span>
                             <span className='tri-up mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-accent' />
-                            <span>TIVE</span>
+                            <span>YFUL</span>
                         </div>
                         <div className='-mt-[0.08em] flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>DE</span>
