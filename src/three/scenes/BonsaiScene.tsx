@@ -2,13 +2,14 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useMemo, useRef } from "react";
-import { AdditiveBlending, Group, Vector3 } from "three";
+import { Color, Group, Vector3 } from "three";
 
 interface NodeData {
     position: Vector3;
-    radius: number;
-    color: string;
+    size: number;
+    y: number;
 }
 
 interface EdgeData {
@@ -16,116 +17,105 @@ interface EdgeData {
     end: Vector3;
 }
 
-const NODE_COLORS = ["#8bd17c", "#a3e08f", "#6fc766", "#c7e69a"];
-const ROOT_COLOR = "#d9e35c";
-const EDGE_COLOR = "#8b6f47";
+// github.com/WeegieCat/trie-bonsai の AnimatedBonsai.tsx に実装されている
+// ノード配置のロジック（ルート1 + 円状に5本の枝 + 各枝から2つの子）をそのまま移植し、
+// SceneContent.tsx の配色・マテリアル・Bloom設定を踏襲している。
+const EDGE_COLOR = "#8b7355";
+// nodeGradientPreset: "dustyGrass"（既定値）
+const GRADIENT_STOPS = ["#d4fc79", "#96e6a1"];
 
-/**
- * Trie Bonsai（github.com/WeegieCat/trie-bonsai, https://2939976d.trie-bonsai.pages.dev/）
- * のホーム画面で使われている、発光するノードを線で結んだグラフ表現を汲んだモックアップ。
- * 実プロダクトの厳密な再現ではなく、トライ木の分岐をノード・エッジで
- * 可視化するというコンセプトを表現したもの。
- */
-function generateGraph(depth: number) {
-    const nodes: NodeData[] = [];
+function colorFromGradient(ratio: number): Color {
+    const clamped = Math.min(1, Math.max(0, ratio));
+    return new Color(GRADIENT_STOPS[0]).lerp(
+        new Color(GRADIENT_STOPS[1]),
+        clamped
+    );
+}
+
+function generateBonsaiLayout() {
+    const nodes: NodeData[] = [{ position: new Vector3(0, 0, 0), size: 1.5, y: 0 }];
     const edges: EdgeData[] = [];
+    const root = nodes[0].position;
 
-    function recurse(
-        origin: Vector3,
-        direction: Vector3,
-        length: number,
-        remaining: number
-    ) {
-        const end = origin
-            .clone()
-            .add(direction.clone().multiplyScalar(length));
-        edges.push({ start: origin.clone(), end });
-        nodes.push({
-            position: end,
-            radius: 0.05 + Math.random() * 0.03,
-            color: NODE_COLORS[Math.floor(Math.random() * NODE_COLORS.length)],
-        });
+    for (let i = 0; i < 5; i++) {
+        const angle = (i / 5) * Math.PI * 2;
+        const x = Math.cos(angle) * 3;
+        const z = Math.sin(angle) * 3;
+        const branch = new Vector3(x, 2, z);
 
-        if (remaining === 0) return;
+        nodes.push({ position: branch, size: 1, y: 2 });
+        edges.push({ start: root, end: branch });
 
-        const childCount = remaining > 2 ? 2 : 1 + Math.round(Math.random() * 2);
-        for (let i = 0; i < childCount; i++) {
-            const spread = 0.9;
-            const newDirection = direction
-                .clone()
-                .applyAxisAngle(new Vector3(1, 0, 0), (Math.random() - 0.5) * spread)
-                .applyAxisAngle(new Vector3(0, 1, 0), (Math.random() - 0.5) * spread)
-                .applyAxisAngle(new Vector3(0, 0, 1), (Math.random() - 0.3) * spread)
-                .normalize();
-            recurse(end, newDirection, length * 0.8, remaining - 1);
+        for (let j = 0; j < 2; j++) {
+            const subAngle = angle + (j - 0.5) * 0.8;
+            const subX = Math.cos(subAngle) * 2 + x;
+            const subZ = Math.sin(subAngle) * 2 + z;
+            const leaf = new Vector3(subX, 4, subZ);
+
+            nodes.push({ position: leaf, size: 0.7, y: 4 });
+            edges.push({ start: branch, end: leaf });
         }
     }
-
-    const root = new Vector3(0, -1, 0);
-    nodes.push({ position: root, radius: 0.16, color: ROOT_COLOR });
-    recurse(root, new Vector3(0, 1, 0), 0.55, depth);
 
     return { nodes, edges };
 }
 
-function GlowNode({ position, radius, color }: NodeData) {
-    return (
-        <group position={position}>
-            {/* 発光の芯 */}
-            <mesh>
-                <sphereGeometry args={[radius, 12, 12]} />
-                <meshBasicMaterial color={color} toneMapped={false} />
-            </mesh>
-            {/* postprocessing無しでの簡易ブルーム表現。加算合成の半透明な大きい球を重ねる */}
-            <mesh scale={2.4}>
-                <sphereGeometry args={[radius, 12, 12]} />
-                <meshBasicMaterial
-                    color={color}
-                    transparent
-                    opacity={0.25}
-                    blending={AdditiveBlending}
-                    depthWrite={false}
-                    toneMapped={false}
-                />
-            </mesh>
-        </group>
-    );
-}
-
-function Graph() {
+function Bonsai() {
     const groupRef = useRef<Group>(null);
-    const { nodes, edges } = useMemo(() => generateGraph(4), []);
+    const { nodes, edges } = useMemo(() => generateBonsaiLayout(), []);
+    const minY = 0;
+    const maxY = 4;
 
     useFrame((_, delta) => {
         if (groupRef.current) groupRef.current.rotation.y += delta * 0.2;
     });
 
     return (
-        <group ref={groupRef}>
+        <group ref={groupRef} position={[0, -1.6, 0]} scale={0.42}>
             {edges.map((edge, i) => (
                 <Line
                     key={i}
                     points={[edge.start, edge.end]}
                     color={EDGE_COLOR}
-                    lineWidth={1.4}
-                    transparent
-                    opacity={0.55}
+                    lineWidth={1}
                 />
             ))}
-            {nodes.map((node, i) => (
-                <GlowNode key={i} {...node} />
-            ))}
+            {nodes.map((node, i) => {
+                const color = colorFromGradient(
+                    (node.y - minY) / (maxY - minY)
+                );
+                return (
+                    <mesh key={i} position={node.position}>
+                        <sphereGeometry args={[node.size * 0.4, 16, 16]} />
+                        <meshStandardMaterial
+                            color={color}
+                            emissive={color}
+                            emissiveIntensity={0.3}
+                        />
+                    </mesh>
+                );
+            })}
         </group>
     );
 }
 
 export default function BonsaiScene() {
     return (
-        <Canvas camera={{ position: [0, 0.1, 3], fov: 42 }} dpr={[1, 2]}>
-            {/* 参考にしたホーム画面のように暗い背景で発光を映えさせる。
-                サイトのテーマ配色に関わらず固定（スクリーンショット的な位置づけのため） */}
-            <color attach='background' args={["#05070a"]} />
-            <Graph />
+        <Canvas camera={{ position: [-3.5, 3, 5], fov: 40 }} dpr={[1, 2]}>
+            {/* SceneContentのbackgroundColor既定値 */}
+            <color attach='background' args={["#1a1a1a"]} />
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 10, 7]} intensity={1} />
+            <pointLight position={[-5, 5, 5]} intensity={0.3} />
+            <Bonsai />
+            <EffectComposer>
+                <Bloom
+                    mipmapBlur
+                    intensity={0.7}
+                    luminanceThreshold={0.2}
+                    luminanceSmoothing={0.6}
+                />
+            </EffectComposer>
         </Canvas>
     );
 }
