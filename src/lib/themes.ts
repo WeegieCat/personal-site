@@ -31,23 +31,22 @@ export const SITE_THEMES: SiteTheme[] = [
         id: "default",
         label: "Default",
         vars: {
-            background: "#0b1220",
-            surface: "#111a2e",
-            foreground: "#f1f5f9",
-            muted: "#94a3b8",
-            border: "#1f2937",
-            // primary/accentも木と同じmochiHoppe配色（シアン・ピンク）の方向で揃える。
-            // ただし木のグラデーションの#00f3ffそのままだと明るすぎて、上に乗る
-            // 白文字（on-primary）とのコントラストがほぼ無くなってしまうため、
-            // UIのprimaryとしては同系統でやや落ち着いたシアンにしている
-            primary: "#0891b2",
-            "primary-hover": "#06b6d4",
+            background: "#ffffff",
+            surface: "#ecfeff",
+            foreground: "#0f172a",
+            muted: "#64748b",
+            border: "#e2e8f0",
+            // 木のmochiHoppeプリセット（黄・シアン・ピンク）をサイト全体の
+            // テーマカラーとして使う。背景が白なので on-primary は常に
+            // 濃い色でよく、primary/accent自体は元の鮮やかな色をそのまま使える
+            primary: "#00f3ff",
+            "primary-hover": "#00c2d1",
             accent: "#ff70a7",
-            "hero-bg": "#0d1526",
-            "on-primary": "#f8fafc",
+            "hero-bg": "#f0fdff",
+            "on-primary": "#111111",
         },
-        // 実際のtrie-bonsaiの "mochiHoppe" プリセットそのまま（黄→シアン→ピンク）
-        bonsaiGradient: ["#fff446", "#00f3ff", "#ff70a7"],
+        // 実際のtrie-bonsaiのデフォルト "dustyGrass" プリセット（元の木の配色に戻した）
+        bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
     {
         id: "sunset",
