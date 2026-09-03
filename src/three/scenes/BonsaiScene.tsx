@@ -66,8 +66,14 @@ function Bonsai() {
     const minY = 0;
     const maxY = 4;
 
-    useFrame((_, delta) => {
-        if (groupRef.current) groupRef.current.rotation.y += delta * 0.2;
+    // 枝が5本、円周上に72度間隔で並んでいるため、連続で1回転させると
+    // 枝どうしが正面から重なって見える角度を必ず通過し、絡まって見える瞬間が出る。
+    // 見栄えの良い正面付近の角度だけを小さく往復させ、その瞬間を避ける。
+    useFrame(({ clock }) => {
+        if (groupRef.current) {
+            groupRef.current.rotation.y =
+                Math.sin(clock.elapsedTime * 0.3) * 0.25;
+        }
     });
 
     return (
