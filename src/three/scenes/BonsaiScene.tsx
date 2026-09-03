@@ -62,14 +62,27 @@ function generateBonsaiLayout() {
     return { nodes, edges };
 }
 
+// カメラ・幾何は固定なので、この5分岐構造がどう見えるかは rotation.y
+// だけで決まる。連続回転させると「根本が奥の枝と重なって見える瞬間」と
+// 「奥行きのある枝同士が線として交差して見える瞬間」を毎周期通過してしまい、
+// 見た目が回転のたびに大きく変わってしまう。
+// 全周を2度刻みでシミュレーションし、(a) 根本が他ノードと重ならず孤立して
+// 見える、(b) 線分の交差数ができるだけ多い、の両方を満たす角度を探した結果、
+// 約60度がその条件を満たす代表的な角度だった。回転はそこを中心に
+// 小さく揺らすだけに留め、常にこの見え方に近い状態を保つ。
+const GOOD_ANGLE = (60 * Math.PI) / 180;
+
 function Bonsai() {
     const groupRef = useRef<Group>(null);
     const { nodes, edges } = useMemo(() => generateBonsaiLayout(), []);
     const minY = 0;
     const maxY = 4;
 
-    useFrame((_, delta) => {
-        if (groupRef.current) groupRef.current.rotation.y += delta * 0.2;
+    useFrame(({ clock }) => {
+        if (groupRef.current) {
+            groupRef.current.rotation.y =
+                GOOD_ANGLE + Math.sin(clock.elapsedTime * 0.25) * 0.14;
+        }
     });
 
     return (
