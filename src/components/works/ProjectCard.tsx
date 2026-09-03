@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Project } from "@/types";
+import BonsaiPreview from "@/three/canvas/BonsaiPreview";
 
 interface ProjectCardProps {
     project: Project;
@@ -8,16 +9,22 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
     return (
         <article className='group overflow-hidden rounded-lg border border-border bg-background transition-shadow duration-300 hover:shadow-lg'>
-            {project.image && (
+            {project.slug === "trie-bonsai" ? (
                 <div className='relative h-48 overflow-hidden bg-surface'>
-                    <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                        className='object-cover transition-transform duration-300 group-hover:scale-105'
-                    />
+                    <BonsaiPreview className='h-full w-full' />
                 </div>
+            ) : (
+                project.image && (
+                    <div className='relative h-48 overflow-hidden bg-surface'>
+                        <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                            className='object-cover transition-transform duration-300 group-hover:scale-105'
+                        />
+                    </div>
+                )
             )}
 
             <div className='p-6'>

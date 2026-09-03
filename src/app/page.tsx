@@ -4,7 +4,6 @@ import Hero from "@/components/home/Hero";
 import ProjectCard from "@/components/works/ProjectCard";
 import { featuredProjects, skills } from "@/content/projects";
 import { affiliation, bio } from "@/content/profile";
-import { SITE_NAME } from "@/lib/site";
 
 // Header / Footer は app/layout.tsx が描画するのでここでは呼ばない
 export default function HomePage() {
@@ -15,7 +14,7 @@ export default function HomePage() {
             <section id='hero-next' className='py-20'>
                 <Container size='default'>
                     <h2 className='mb-2 text-4xl font-bold sm:text-5xl'>
-                        About {SITE_NAME}
+                        About Me
                     </h2>
                     <p className='mb-4 text-lg text-muted'>{affiliation}</p>
                     <p className='leading-relaxed text-foreground'>{bio}</p>
