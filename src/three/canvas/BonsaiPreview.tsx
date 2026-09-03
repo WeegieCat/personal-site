@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { SITE_THEMES } from "@/lib/themes";
+import { useSiteTheme } from "@/lib/theme-context";
 
 /**
  * three.js はバンドルが大きく WebGL はブラウザでしか動かないため ssr: false で遅延読み込みする。
@@ -17,9 +19,12 @@ export default function BonsaiPreview({
 }: {
     className?: string;
 }) {
+    const { themeIndex } = useSiteTheme();
+    const theme = SITE_THEMES[themeIndex];
+
     return (
         <div className={className}>
-            <BonsaiScene />
+            <BonsaiScene colors={theme.bonsaiGradient} />
         </div>
     );
 }

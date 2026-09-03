@@ -17,6 +17,12 @@ export interface SiteTheme {
     id: string;
     label: string;
     vars: SiteThemeVars;
+    /**
+     * Trie Bonsaiの発光ノードに使うグラデーション。2色以上を指定でき、
+     * 実際の trie-bonsai (SceneContent.tsx) の nodeGradientPreset と
+     * 同じ考え方で、深さに応じて等分に補間する。
+     */
+    bonsaiGradient: readonly string[];
 }
 
 /** 右下のキューブバッジをクリックするたびにこの順で切り替わる */
@@ -25,17 +31,21 @@ export const SITE_THEMES: SiteTheme[] = [
         id: "default",
         label: "Default",
         vars: {
-            background: "#0b1220",
-            surface: "#111a2e",
-            foreground: "#f1f5f9",
-            muted: "#94a3b8",
-            border: "#1f2937",
-            primary: "#3b82f6",
-            "primary-hover": "#60a5fa",
-            accent: "#a78bfa",
-            "hero-bg": "#0d1526",
-            "on-primary": "#f8fafc",
+            background: "#ffffff",
+            surface: "#ecfeff",
+            foreground: "#0f172a",
+            muted: "#64748b",
+            border: "#e2e8f0",
+            primary: "#06b6d4",
+            "primary-hover": "#0891b2",
+            accent: "#ec4899",
+            "hero-bg": "#f0fdff",
+            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
+            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
+            "on-primary": "#111111",
         },
+        // 実際のtrie-bonsaiの "mochiHoppe" プリセットそのまま（黄→シアン→ピンク）
+        bonsaiGradient: ["#fff446", "#00f3ff", "#ff70a7"],
     },
     {
         id: "sunset",
@@ -50,10 +60,9 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#ef4444",
             accent: "#f59e0b",
             "hero-bg": "#fff1e6",
-            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
-            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
             "on-primary": "#111111",
         },
+        bonsaiGradient: ["#dc2626", "#f59e0b"],
     },
     {
         id: "terminal",
@@ -70,6 +79,7 @@ export const SITE_THEMES: SiteTheme[] = [
             "hero-bg": "#000000",
             "on-primary": "#f0fdf4",
         },
+        bonsaiGradient: ["#16a34a", "#4ade80"],
     },
     {
         id: "bubblegum",
@@ -84,10 +94,9 @@ export const SITE_THEMES: SiteTheme[] = [
             "primary-hover": "#a855f7",
             accent: "#ec4899",
             "hero-bg": "#f3e8ff",
-            // 背景が明るいテーマは、円からはみ出た部分が白地に重なるため
-            // 白文字だと見えなくなる。円の上でも背景の上でも読める黒にする
             "on-primary": "#111111",
         },
+        bonsaiGradient: ["#9333ea", "#ec4899"],
     },
 ];
 
