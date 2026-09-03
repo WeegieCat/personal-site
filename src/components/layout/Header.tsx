@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "./navItems";
 import Container from "@/components/ui/Container";
 import ThemePicker from "./ThemePicker";
-import { SITE_INITIAL, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +18,14 @@ export default function Header() {
             <Container size='wide'>
                 <div className='flex h-16 items-center justify-between'>
                     <Link href='/' className='flex items-center gap-2'>
-                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent'>
-                            <span className='text-sm font-bold text-white'>
-                                {SITE_INITIAL}
-                            </span>
+                        <div className='relative h-8 w-8 overflow-hidden rounded-lg'>
+                            <Image
+                                src='/images/profile.png'
+                                alt={SITE_NAME}
+                                fill
+                                sizes='32px'
+                                className='object-cover'
+                            />
                         </div>
                         <span className='hidden text-lg font-bold text-foreground sm:inline'>
                             {SITE_NAME}

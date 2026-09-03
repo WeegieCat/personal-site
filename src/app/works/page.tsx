@@ -14,7 +14,7 @@ export default function WorksPage() {
             <header className='mb-12'>
                 <h1 className='mb-4 text-4xl font-bold sm:text-5xl'>Works</h1>
                 <p className='text-lg text-muted'>
-                    これまでに作ったプロダクトとプロジェクト。
+                    これまでに作ったプロダクトとプロジェクト
                 </p>
             </header>
 

@@ -28,7 +28,7 @@ export default function HomePage() {
                             Featured Projects
                         </h2>
                         <p className='text-lg text-muted'>
-                            計画と実装の両面から、課題解決に取り組んだプロダクトです。
+                            計画と実装の両面から、課題解決に取り組んだプロダクトです
                         </p>
                     </div>
 
