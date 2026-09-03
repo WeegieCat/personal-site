@@ -1,10 +1,10 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { useMemo } from "react";
-import { Color, Vector3 } from "three";
+import { useMemo, useRef } from "react";
+import { Color, Group, Vector3 } from "three";
 
 interface NodeData {
     position: Vector3;
@@ -133,31 +133,35 @@ function layoutTree(): LayoutResult {
 }
 
 function Bonsai() {
+    const groupRef = useRef<Group>(null);
     const { nodes, edges, minY, maxY } = useMemo(() => layoutTree(), []);
 
-    // ルート(0,-10,0)を基準に、木全体がバウンディングボックスの
-    // どのくらいの大きさになるかを動的に計算し、カード内に収まる
-    // スケールへ縮小する。乱数で毎回サイズが変わりうるため、
+    // 自動回転させる（Y軸回転）ため、どの角度から見ても画面に収まる
+    // 必要がある。回転してもズレない「回転軸からの水平距離」
+    // (hypot(x,z)) と、垂直方向の半分の高さのうち大きい方を基準に
+    // スケールを決め、バウンディングボックスの中心をカメラの注視点
+    // (原点)に合わせている。three.jsのプロジェクション計算をNode上で
+    // 10度刻み・複数回試行してクリッピングしないことを確認済みの値
+    // (targetExtent=2.6)を採用した。乱数で毎回サイズが変わりうるため、
     // 固定値ではなく生成結果から都度算出している。
     const { scale, offsetY } = useMemo(() => {
-        const maxExtent = Math.max(
-            ...nodes.map((n) =>
-                Math.max(Math.abs(n.position.x), Math.abs(n.position.z))
-            ),
-            maxY - minY
+        const centerY = (minY + maxY) / 2;
+        const horizontalRadius = Math.max(
+            ...nodes.map((n) => Math.hypot(n.position.x, n.position.z))
         );
-        // 元のトップページ(-20,20,30)を向くカメラと相似の位置関係を保ちつつ、
-        // 小さいプレビュー用にスケールダウンする
-        const targetExtent = 3.2;
+        const verticalHalfExtent = (maxY - minY) / 2;
+        const maxExtent = Math.max(horizontalRadius, verticalHalfExtent);
+        const targetExtent = 2.6;
         const s = targetExtent / maxExtent;
-        // ルートのY座標をカード下部付近に合わせる
-        const rootWorldY = -10 * s;
-        const anchorY = -1.4;
-        return { scale: s, offsetY: anchorY - rootWorldY };
+        return { scale: s, offsetY: -centerY * s };
     }, [nodes, minY, maxY]);
 
+    useFrame((_, delta) => {
+        if (groupRef.current) groupRef.current.rotation.y += delta * 0.25;
+    });
+
     return (
-        <group position={[0, offsetY, 0]} scale={scale}>
+        <group ref={groupRef} position={[0, offsetY, 0]} scale={scale}>
             {edges.map((edge, i) => (
                 <Line
                     key={i}
@@ -188,8 +192,8 @@ function Bonsai() {
 export default function BonsaiScene() {
     return (
         // 実際のホーム画面のカメラ(-20,20,30)と同じ向きの比率を保ったまま、
-        // 小さいカード用に距離を縮めている。実装に自動回転は無いため、
-        // こちらも固定視点にしている。
+        // 小さいカード用に距離を縮めている（実際の実装に自動回転は無いが、
+        // プレビュー用の演出として Bonsai 側でゆっくり自動回転させている）。
         <Canvas camera={{ position: [-3.5, 3.5, 5.25], fov: 40 }} dpr={[1, 2]}>
             {/* SceneContentのbackgroundColor既定値 */}
             <color attach='background' args={["#1a1a1a"]} />

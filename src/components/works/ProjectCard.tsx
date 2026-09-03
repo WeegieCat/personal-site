@@ -9,18 +9,18 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     return (
-        <article className='group overflow-hidden rounded-lg border border-border bg-background transition-shadow duration-300 hover:shadow-lg'>
+        <article className='group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background transition-shadow duration-300 hover:shadow-lg'>
             {project.slug === "trie-bonsai" ? (
                 <Link
                     href={`/works/${project.slug}`}
-                    className='relative block h-48 overflow-hidden bg-surface'>
+                    className='relative block h-48 shrink-0 overflow-hidden bg-surface'>
                     <BonsaiPreview className='h-full w-full' />
                 </Link>
             ) : (
                 project.image && (
                     <Link
                         href={`/works/${project.slug}`}
-                        className='relative block h-48 overflow-hidden bg-surface'>
+                        className='relative block h-48 shrink-0 overflow-hidden bg-surface'>
                         <Image
                             src={project.image}
                             alt={project.title}
@@ -32,7 +32,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 )
             )}
 
-            <div className='p-6'>
+            {/* flex-1 + 下の mt-auto で、カードごとに説明文・タグの行数が
+                違ってもボタン行が常に下端に揃うようにしている */}
+            <div className='flex flex-1 flex-col p-6'>
                 <h3 className='mb-2 text-lg font-bold'>{project.title}</h3>
                 <p className='mb-4 line-clamp-3 text-sm text-muted'>
                     {project.description}
@@ -49,7 +51,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 </div>
 
                 {(project.link || project.github) && (
-                    <div className='flex gap-3 border-t border-border pt-4'>
+                    <div className='mt-auto flex gap-3 border-t border-border pt-4'>
                         {project.link && (
                             <a
                                 href={project.link}
