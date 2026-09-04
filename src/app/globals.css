@@ -12,8 +12,8 @@
     --muted: #5c6b52;
     --border: #d7e3b4;
     --primary: #2e7d32;
-    --primary-hover: #d9711f;
-    --accent: #d6336c;
+    --primary-hover: #3f9b45;
+    --accent: #dc9b18;
     /* ヒーローのポスター面。primary/accent の図形が映える下地 */
     --hero-bg: #f3f7e6;
     /*
@@ -24,6 +24,8 @@
      * ワードマークなど primary の上に重なる文字は必ずこちらを使う。
      */
     --on-primary: #111111;
+    /* accent色の円やボタンの上に乗る文字専用の色。黄色系のように明度が高いaccentでは白文字が読めなくなるため独立させている */
+    --on-accent: #182b12;
 }
 
 @theme inline {
@@ -37,6 +39,7 @@
     --color-accent: var(--accent);
     --color-hero-bg: var(--hero-bg);
     --color-on-primary: var(--on-primary);
+    --color-on-accent: var(--on-accent);
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);

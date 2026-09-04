@@ -11,6 +11,8 @@ export interface SiteThemeVars {
     "hero-bg": string;
     /** primary色の円やボタンの上に乗る文字専用の色（背景色と同化しないよう独立させている） */
     "on-primary": string;
+    /** accent色の円やボタンの上に乗る文字専用の色。黄色系など明度の高いaccentでは白文字が読めなくなるため独立させている */
+    "on-accent": string;
 }
 
 export interface SiteTheme {
@@ -37,10 +39,11 @@ export const SITE_THEMES: SiteTheme[] = [
             muted: "#5c6b52",
             border: "#d7e3b4",
             primary: "#2e7d32",
-            "primary-hover": "#d9711f",
-            accent: "#d6336c",
+            "primary-hover": "#3f9b45",
+            accent: "#dc9b18",
             "hero-bg": "#f3f7e6",
             "on-primary": "#111111",
+            "on-accent": "#182b12",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
@@ -58,6 +61,7 @@ export const SITE_THEMES: SiteTheme[] = [
             accent: "#a78bfa",
             "hero-bg": "#0d1526",
             "on-primary": "#f8fafc",
+            "on-accent": "#ffffff",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
@@ -75,6 +79,7 @@ export const SITE_THEMES: SiteTheme[] = [
             accent: "#f59e0b",
             "hero-bg": "#fff1e6",
             "on-primary": "#111111",
+            "on-accent": "#ffffff",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
@@ -92,6 +97,7 @@ export const SITE_THEMES: SiteTheme[] = [
             accent: "#4ade80",
             "hero-bg": "#000000",
             "on-primary": "#f0fdf4",
+            "on-accent": "#ffffff",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
@@ -109,6 +115,7 @@ export const SITE_THEMES: SiteTheme[] = [
             accent: "#ec4899",
             "hero-bg": "#f3e8ff",
             "on-primary": "#111111",
+            "on-accent": "#ffffff",
         },
         bonsaiGradient: ["#d4fc79", "#96e6a1"],
     },
