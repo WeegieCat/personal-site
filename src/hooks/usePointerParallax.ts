@@ -13,7 +13,9 @@ interface ParallaxLayer {
  * lerp で滑らかに追従させながら各レイヤーへ translate3d を直接適用する。
  * React state を経由しないので、動いている間も再レンダーは発生しない。
  *
- * タッチ端末（hover不可）と prefers-reduced-motion では何もしない。
+ * タッチ端末では指を動かしている間だけ pointermove が飛んでくるので、
+ * それをそのままポインタ位置として使う。指を離したら (pointerup/cancel)
+ * 中心に戻す。prefers-reduced-motion では何もしない。
  */
 export function usePointerParallax(
     containerRef: RefObject<HTMLElement | null>,
@@ -26,8 +28,7 @@ export function usePointerParallax(
         const reduceMotion = window.matchMedia(
             "(prefers-reduced-motion: reduce)"
         ).matches;
-        const noHover = window.matchMedia("(hover: none)").matches;
-        if (reduceMotion || noHover) return;
+        if (reduceMotion) return;
 
         let targetX = 0;
         let targetY = 0;
@@ -65,6 +66,9 @@ export function usePointerParallax(
         // 止まって見えてしまう。window なら重なりに関係なく座標を追える。
         window.addEventListener("pointermove", onMove);
         document.documentElement.addEventListener("pointerleave", onLeave);
+        // タッチは離すと pointerleave が飛ばないため、pointerup/cancel でも中心に戻す
+        window.addEventListener("pointerup", onLeave);
+        window.addEventListener("pointercancel", onLeave);
         raf = requestAnimationFrame(tick);
 
         return () => {
@@ -73,6 +77,8 @@ export function usePointerParallax(
                 "pointerleave",
                 onLeave
             );
+            window.removeEventListener("pointerup", onLeave);
+            window.removeEventListener("pointercancel", onLeave);
             cancelAnimationFrame(raf);
             for (const { ref } of layers) {
                 if (ref.current) ref.current.style.transform = "";
