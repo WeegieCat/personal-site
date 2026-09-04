@@ -91,7 +91,7 @@ export default function Hero() {
                                 className='mx-[0.08em] inline-block h-[0.75em] w-[0.82em]'>
                                 <polygon
                                     points='50,10 10,84 90,84'
-                                    strokeWidth='9'
+                                    strokeWidth='4'
                                     strokeLinejoin='round'
                                     className='fill-accent stroke-foreground'
                                 />
@@ -105,7 +105,7 @@ export default function Hero() {
                                 className='mx-[0.08em] inline-block h-[0.75em] w-[0.82em]'>
                                 <polygon
                                     points='10,8 90,8 50,82'
-                                    strokeWidth='9'
+                                    strokeWidth='4'
                                     strokeLinejoin='round'
                                     className='fill-primary-hover stroke-foreground'
                                 />
