@@ -2,18 +2,20 @@
 
 /* ダーク/ライトの切り替えは廃止し、この配色に固定する */
 :root {
-    --background: #ffffff;
-    --surface: #ecfeff;
-    --foreground: #0f172a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-    /* 木のmochiHoppeプリセット（黄・シアン・ピンク）をサイト全体の
-     * テーマカラーとして使う（詳細はthemes.tsのコメント参照） */
-    --primary: #00f3ff;
-    --primary-hover: #00c2d1;
-    --accent: #ff70a7;
+    /*
+     * ここはJSが効く前(初回ペイント/no-JS)向けのフォールバック。
+     * src/lib/themes.ts の SITE_THEMES[0]（Default）と値を揃えること。
+     */
+    --background: #eef3d6;
+    --surface: #f7faed;
+    --foreground: #1e2a16;
+    --muted: #6b7280;
+    --border: #d9e4b0;
+    --primary: #4a7c2f;
+    --primary-hover: #f2994a;
+    --accent: #e8467d;
     /* ヒーローのポスター面。primary/accent の図形が映える下地 */
-    --hero-bg: #f0fdff;
+    --hero-bg: #eef3d6;
     /*
      * primary色の円やボタンの「上に乗る」文字専用の色。
      * --foreground はテーマによって明にも暗にもなるため、
