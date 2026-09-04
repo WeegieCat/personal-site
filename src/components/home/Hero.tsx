@@ -86,12 +86,30 @@ export default function Hero() {
                     <div className='flex -rotate-6 flex-col items-center gap-1'>
                         <div className='flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>PL</span>
-                            <span className='tri-up mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-accent' />
+                            <svg
+                                viewBox='0 0 100 92'
+                                className='mx-[0.06em] inline-block h-[0.55em] w-[0.6em]'>
+                                <polygon
+                                    points='50,10 10,84 90,84'
+                                    strokeWidth='9'
+                                    strokeLinejoin='round'
+                                    className='fill-accent stroke-foreground'
+                                />
+                            </svg>
                             <span>YFUL</span>
                         </div>
                         <div className='-mt-[0.08em] flex items-center text-[clamp(2.75rem,9vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>DE</span>
-                            <span className='tri-down mx-[0.06em] inline-block h-[0.55em] w-[0.6em] bg-primary-hover' />
+                            <svg
+                                viewBox='0 0 100 92'
+                                className='mx-[0.06em] inline-block h-[0.55em] w-[0.6em]'>
+                                <polygon
+                                    points='10,8 90,8 50,82'
+                                    strokeWidth='9'
+                                    strokeLinejoin='round'
+                                    className='fill-primary-hover stroke-foreground'
+                                />
+                            </svg>
                             <span>EL</span>
                             <span className='hero-photo mx-[0.06em] inline-block h-[0.85em] w-[0.85em] rounded-full border-2 border-foreground' />
                             <span>PER</span>
