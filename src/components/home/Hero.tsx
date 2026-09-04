@@ -88,7 +88,7 @@ export default function Hero() {
                             <span>PL</span>
                             <svg
                                 viewBox='0 0 100 92'
-                                className='mx-[0.06em] inline-block h-[0.55em] w-[0.6em]'>
+                                className='mx-[0.08em] inline-block h-[0.75em] w-[0.82em]'>
                                 <polygon
                                     points='50,10 10,84 90,84'
                                     strokeWidth='9'
@@ -102,7 +102,7 @@ export default function Hero() {
                             <span>DE</span>
                             <svg
                                 viewBox='0 0 100 92'
-                                className='mx-[0.06em] inline-block h-[0.55em] w-[0.6em]'>
+                                className='mx-[0.08em] inline-block h-[0.75em] w-[0.82em]'>
                                 <polygon
                                     points='10,8 90,8 50,82'
                                     strokeWidth='9'
