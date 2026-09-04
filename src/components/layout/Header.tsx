@@ -15,11 +15,11 @@ export default function Header() {
                         {index > 0 && <span aria-hidden='true'>/</span>}
                         <Link
                             href={item.href}
-                            className={`hv-underline ${
+                            className={
                                 pathname === item.href
-                                    ? "text-primary"
-                                    : "text-on-primary sm:text-foreground"
-                            }`}>
+                                    ? "rounded-full bg-background px-3 py-1 text-primary"
+                                    : "hv-underline text-on-primary sm:text-foreground"
+                            }>
                             {item.label}
                         </Link>
                     </span>
