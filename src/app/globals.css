@@ -6,16 +6,16 @@
      * ここはJSが効く前(初回ペイント/no-JS)向けのフォールバック。
      * src/lib/themes.ts の SITE_THEMES[0]（Default）と値を揃えること。
      */
-    --background: #eef3d6;
-    --surface: #f7faed;
-    --foreground: #1e2a16;
-    --muted: #6b7280;
-    --border: #d9e4b0;
-    --primary: #4a7c2f;
-    --primary-hover: #f2994a;
-    --accent: #e8467d;
+    --background: #f3f7e6;
+    --surface: #fbfdf3;
+    --foreground: #182b12;
+    --muted: #5c6b52;
+    --border: #d7e3b4;
+    --primary: #2e7d32;
+    --primary-hover: #d9711f;
+    --accent: #d6336c;
     /* ヒーローのポスター面。primary/accent の図形が映える下地 */
-    --hero-bg: #eef3d6;
+    --hero-bg: #f3f7e6;
     /*
      * primary色の円やボタンの「上に乗る」文字専用の色。
      * --foreground はテーマによって明にも暗にもなるため、
