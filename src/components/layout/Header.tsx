@@ -17,7 +17,7 @@ export default function Header() {
                             href={item.href}
                             className={`hv-underline ${
                                 pathname === item.href
-                                    ? "text-accent sm:text-primary"
+                                    ? "text-primary"
                                     : "text-on-primary sm:text-foreground"
                             }`}>
                             {item.label}

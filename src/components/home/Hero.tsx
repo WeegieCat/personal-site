@@ -121,7 +121,7 @@ export default function Hero() {
                     ref={interestedRef}
                     type='button'
                     onClick={scrollToNext}
-                    className='relative z-10 mx-auto mt-32 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-accent text-center text-white shadow-lg transition-transform hover:scale-105 sm:mt-10 sm:h-44 sm:w-44'>
+                    className='relative z-10 mx-auto mt-32 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-accent text-center text-on-accent shadow-lg transition-transform hover:scale-105 sm:mt-10 sm:h-44 sm:w-44'>
                     <span className='text-sm font-semibold sm:text-lg'>
                         Interested?
                     </span>
