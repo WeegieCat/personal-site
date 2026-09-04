@@ -84,7 +84,7 @@ export default function Hero() {
                     aria-hidden='true'
                     className='relative z-10 mx-auto mt-20 max-w-4xl sm:mt-28'>
                     <div className='flex -rotate-6 flex-col items-center gap-1'>
-                        <div className='flex items-center text-[clamp(3.5rem,15.5vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
+                        <div className='flex items-center text-[clamp(3.25rem,14.5vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>PL</span>
                             <svg
                                 viewBox='0 0 100 92'
@@ -98,7 +98,7 @@ export default function Hero() {
                             </svg>
                             <span>YFUL</span>
                         </div>
-                        <div className='-mt-[0.08em] flex items-center text-[clamp(3.5rem,15.5vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
+                        <div className='-mt-[0.08em] flex items-center text-[clamp(3.25rem,14.5vw,6rem)] leading-[0.8] font-black tracking-tight text-on-primary uppercase'>
                             <span>DE</span>
                             <svg
                                 viewBox='0 0 100 92'
