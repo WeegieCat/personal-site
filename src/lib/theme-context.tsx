@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
 import { applySiteTheme, SITE_THEMES } from "./themes";
 
 interface ThemeContextValue {
@@ -12,6 +18,14 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function SiteThemeProvider({ children }: { children: ReactNode }) {
     const [themeIndex, setThemeIndexState] = useState(0);
+
+    // globals.css の :root はJSが効く前のフォールバックに過ぎないため、
+    // マウント時に必ずSITE_THEMES側の値で上書きし、両者がズレても
+    // 実際の表示はSITE_THEMESを正として揃える
+    useEffect(() => {
+        applySiteTheme(SITE_THEMES[themeIndex]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const setThemeIndex = (index: number) => {
         setThemeIndexState(index);
