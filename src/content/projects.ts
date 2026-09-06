@@ -1,4 +1,4 @@
-import { Project } from "@/types";
+import { Project, SkillCategory } from "@/types";
 
 /**
  * Works 一覧の元データ。
@@ -42,22 +42,44 @@ export const projects: Project[] = [
 
 export const featuredProjects = projects.filter((p) => p.featured);
 
-export const skills = {
-    Languages: ["TypeScript", "JavaScript", "Dart", "C++", "Python", "C"],
-    "Frameworks & Libraries": [
-        "Next.js",
-        "React",
-        "React Three Fiber",
-        "Zustand",
-        "Tailwind CSS",
-        "Flutter",
-        "Hono",
-        "Drizzle ORM",
-    ],
-    "Infra & Platforms": [
-        "Cloudflare (Workers/R2/D1)",
-        "Firebase",
-        "Google Maps Platform",
-        "Arduino",
-    ],
-} as const;
+/**
+ * Skills & Expertise のスライダー。
+ * level は 0〜100 の自己申告値で、SkillMeters がそのまま塗り幅に使う。
+ * 数値の刻みに客観的な根拠はないので、段階ラベル（LEVEL_STEPS）の
+ * 境界（40 / 60 / 80）をまたぐかどうかだけを意識して調整すればよい。
+ */
+export const skills: SkillCategory[] = [
+    {
+        category: "Languages",
+        items: [
+            { name: "TypeScript", level: 85 },
+            { name: "JavaScript", level: 80 },
+            { name: "Dart", level: 65 },
+            { name: "Python", level: 55 },
+            { name: "C++", level: 50 },
+            { name: "C", level: 45 },
+        ],
+    },
+    {
+        category: "Frameworks & Libraries",
+        items: [
+            { name: "Next.js", level: 85 },
+            { name: "React", level: 80 },
+            { name: "Tailwind CSS", level: 75 },
+            { name: "React Three Fiber", level: 70 },
+            { name: "Flutter", level: 65 },
+            { name: "Zustand", level: 65 },
+            { name: "Hono", level: 55 },
+            { name: "Drizzle ORM", level: 45 },
+        ],
+    },
+    {
+        category: "Infra & Platforms",
+        items: [
+            { name: "Cloudflare (Workers/R2/D1)", level: 70 },
+            { name: "Firebase", level: 60 },
+            { name: "Google Maps Platform", level: 55 },
+            { name: "Arduino", level: 40 },
+        ],
+    },
+];

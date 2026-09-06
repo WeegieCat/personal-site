@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Hero from "@/components/home/Hero";
 import ProjectCard from "@/components/works/ProjectCard";
+import SkillMeters from "@/components/home/SkillMeters";
 import { featuredProjects, skills } from "@/content/projects";
 import { affiliation, bio } from "@/content/profile";
 
@@ -51,32 +52,16 @@ export default function HomePage() {
             <section className='py-20'>
                 <Container size='wide'>
                     <div className='mb-16 text-center'>
-                        <h2 className='text-4xl font-bold sm:text-5xl'>
+                        <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
                             Skills &amp; Expertise
                         </h2>
+                        <p className='text-sm text-muted'>
+                            習熟度は自己申告の目安です（主戦力 / 制作で常用 /
+                            実装経験あり / 学習中）
+                        </p>
                     </div>
 
-                    <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
-                        {Object.entries(skills).map(([category, items]) => (
-                            <div
-                                key={category}
-                                className='rounded-lg border border-border p-8'>
-                                <h3 className='mb-6 text-2xl font-bold'>
-                                    {category}
-                                </h3>
-                                <ul className='space-y-3'>
-                                    {items.map((skill) => (
-                                        <li
-                                            key={skill}
-                                            className='flex items-center text-muted'>
-                                            <span className='mr-3 h-2 w-2 rounded-full bg-primary' />
-                                            {skill}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
+                    <SkillMeters categories={skills} />
                 </Container>
             </section>
         </>

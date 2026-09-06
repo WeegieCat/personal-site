@@ -33,3 +33,21 @@ export interface BlogPostMeta {
     tags: string[];
     draft?: boolean;
 }
+
+/**
+ * Skills & Expertise の1項目。
+ * level は 0〜100 の自己申告の習熟度で、スライダーの塗り幅と段階ラベルを決める。
+ */
+export interface Skill {
+    name: string;
+    /** 0〜100 */
+    level: number;
+}
+
+/**
+ * Skills & Expertise のカテゴリ1枚分（カード1枚に対応）
+ */
+export interface SkillCategory {
+    category: string;
+    items: Skill[];
+}

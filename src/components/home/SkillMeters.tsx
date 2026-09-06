@@ -1,0 +1,97 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import type { SkillCategory } from "@/types";
+
+/**
+ * level(0〜100) と言葉の対応表。
+ * 塗り幅だけでは「満タンが何を意味するのか」が読み手に伝わらないため、
+ * 数値の代わりにこのラベルを出す。降順で並べ、最初に min を満たしたものを採用する。
+ */
+const LEVEL_STEPS = [
+    { min: 80, label: "主戦力" },
+    { min: 60, label: "制作で常用" },
+    { min: 40, label: "実装経験あり" },
+    { min: 0, label: "学習中" },
+] as const;
+
+function levelLabel(level: number): string {
+    return LEVEL_STEPS.find((step) => level >= step.min)!.label;
+}
+
+interface SkillMetersProps {
+    categories: SkillCategory[];
+}
+
+export default function SkillMeters({ categories }: SkillMetersProps) {
+    const rootRef = useRef<HTMLDivElement>(null);
+    // 画面に入るまで幅0で待たせ、入った瞬間に level まで伸ばす。
+    // モーションを抑える設定では motion-reduce:transition-none で即座に確定させる
+    const [revealed, setRevealed] = useState(false);
+
+    useEffect(() => {
+        const el = rootRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                    setRevealed(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2 },
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={rootRef}
+            className='grid grid-cols-1 gap-8 md:grid-cols-3'>
+            {categories.map((category) => (
+                <div
+                    key={category.category}
+                    className='rounded-lg border border-border p-8'>
+                    <h3 className='mb-6 text-2xl font-bold'>
+                        {category.category}
+                    </h3>
+                    <ul className='space-y-5'>
+                        {category.items.map((skill, index) => (
+                            <li key={skill.name}>
+                                <div className='mb-2 flex items-baseline justify-between gap-3'>
+                                    <span className='text-sm font-medium'>
+                                        {skill.name}
+                                    </span>
+                                    <span className='shrink-0 font-mono text-xs text-muted'>
+                                        {levelLabel(skill.level)}
+                                    </span>
+                                </div>
+                                <div
+                                    role='progressbar'
+                                    aria-label={skill.name}
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={skill.level}
+                                    aria-valuetext={levelLabel(skill.level)}
+                                    className='h-2 w-full overflow-hidden rounded-full bg-border'>
+                                    <div
+                                        className='h-full rounded-full bg-linear-to-r from-primary to-accent transition-[width] duration-1000 ease-out motion-reduce:transition-none'
+                                        style={{
+                                            width: revealed
+                                                ? `${skill.level}%`
+                                                : "0%",
+                                            // カード内で上から順に伸びていくよう少しずつ遅らせる
+                                            transitionDelay: `${index * 80}ms`,
+                                        }}
+                                    />
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    );
+}
