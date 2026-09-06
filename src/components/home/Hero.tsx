@@ -110,8 +110,12 @@ export default function Hero() {
         minTopRatio: BUTTON_MIN_TOP_RATIO,
     });
 
+    // section の横方向は clip（hidden ではない）。overflow-x を hidden にすると
+    // CSSの仕様で overflow-y の visible が auto に計算され、下へはみ出した
+    // コード上昇レイヤーのぶんヒーロー内に縦スクロールバーが出てしまう。
+    // clip なら他方の軸は visible のまま保てる。
     return (
-        <section className='relative overflow-x-hidden bg-hero-bg'>
+        <section className='relative overflow-x-clip bg-hero-bg'>
             <div
                 ref={containerRef}
                 className='relative mx-auto min-h-[92vh] w-full max-w-6xl px-6 py-8 sm:px-10 sm:py-12'>
