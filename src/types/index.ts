@@ -35,13 +35,17 @@ export interface BlogPostMeta {
 }
 
 /**
- * Skills & Expertise の1項目。
- * level は 0〜100 の自己申告の習熟度で、スライダーの塗り幅と段階ラベルを決める。
+ * 習熟度。細かい数値に客観的な根拠は置けないので3段階に丸める。
+ * 3=主戦力 / 2=制作で常用 / 1=実装経験あり（対応する表示は SkillMeters の LEVEL_STEPS）
+ */
+export type SkillLevel = 1 | 2 | 3;
+
+/**
+ * Skills & Expertise の1項目
  */
 export interface Skill {
     name: string;
-    /** 0〜100 */
-    level: number;
+    level: SkillLevel;
 }
 
 /**

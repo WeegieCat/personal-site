@@ -1,23 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { SkillCategory } from "@/types";
+import type { SkillCategory, SkillLevel } from "@/types";
 
 /**
- * level(0〜100) と言葉の対応表。
+ * 3段階の習熟度と、ラベル・塗り幅の対応表。
  * 塗り幅だけでは「満タンが何を意味するのか」が読み手に伝わらないため、
- * 数値の代わりにこのラベルを出す。降順で並べ、最初に min を満たしたものを採用する。
+ * バーの横には必ずラベルを出す。
  */
-const LEVEL_STEPS = [
-    { min: 80, label: "主戦力" },
-    { min: 60, label: "制作で常用" },
-    { min: 40, label: "実装経験あり" },
-    { min: 0, label: "学習中" },
-] as const;
-
-function levelLabel(level: number): string {
-    return LEVEL_STEPS.find((step) => level >= step.min)!.label;
-}
+const LEVEL_STEPS: Record<SkillLevel, { label: string; width: string }> = {
+    3: { label: "主戦力", width: "100%" },
+    2: { label: "制作で常用", width: "66%" },
+    1: { label: "実装経験あり", width: "33%" },
+};
 
 interface SkillMetersProps {
     categories: SkillCategory[];
@@ -65,22 +60,25 @@ export default function SkillMeters({ categories }: SkillMetersProps) {
                                         {skill.name}
                                     </span>
                                     <span className='shrink-0 font-mono text-xs text-muted'>
-                                        {levelLabel(skill.level)}
+                                        {LEVEL_STEPS[skill.level].label}
                                     </span>
                                 </div>
                                 <div
                                     role='progressbar'
                                     aria-label={skill.name}
-                                    aria-valuemin={0}
-                                    aria-valuemax={100}
+                                    aria-valuemin={1}
+                                    aria-valuemax={3}
                                     aria-valuenow={skill.level}
-                                    aria-valuetext={levelLabel(skill.level)}
+                                    aria-valuetext={
+                                        LEVEL_STEPS[skill.level].label
+                                    }
                                     className='h-2 w-full overflow-hidden rounded-full bg-border'>
                                     <div
                                         className='h-full rounded-full bg-linear-to-r from-primary to-accent transition-[width] duration-1000 ease-out motion-reduce:transition-none'
                                         style={{
                                             width: revealed
-                                                ? `${skill.level}%`
+                                                ? LEVEL_STEPS[skill.level]
+                                                      .width
                                                 : "0%",
                                             // カード内で上から順に伸びていくよう少しずつ遅らせる
                                             transitionDelay: `${index * 80}ms`,

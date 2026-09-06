@@ -44,42 +44,41 @@ export const featuredProjects = projects.filter((p) => p.featured);
 
 /**
  * Skills & Expertise のスライダー。
- * level は 0〜100 の自己申告値で、SkillMeters がそのまま塗り幅に使う。
- * 数値の刻みに客観的な根拠はないので、段階ラベル（LEVEL_STEPS）の
- * 境界（40 / 60 / 80）をまたぐかどうかだけを意識して調整すればよい。
+ * level は 3=主戦力 / 2=制作で常用 / 1=実装経験あり の3段階（SkillLevel）。
+ * カード内は level の降順で並べる。
  */
 export const skills: SkillCategory[] = [
     {
         category: "Languages",
         items: [
-            { name: "TypeScript", level: 85 },
-            { name: "JavaScript", level: 80 },
-            { name: "Dart", level: 65 },
-            { name: "Python", level: 55 },
-            { name: "C++", level: 50 },
-            { name: "C", level: 45 },
+            { name: "TypeScript", level: 3 },
+            { name: "JavaScript", level: 3 },
+            { name: "C++", level: 3 },
+            { name: "Dart", level: 1 },
+            { name: "Python", level: 1 },
+            { name: "C", level: 1 },
         ],
     },
     {
         category: "Frameworks & Libraries",
         items: [
-            { name: "Next.js", level: 85 },
-            { name: "React", level: 80 },
-            { name: "Tailwind CSS", level: 75 },
-            { name: "React Three Fiber", level: 70 },
-            { name: "Flutter", level: 65 },
-            { name: "Zustand", level: 65 },
-            { name: "Hono", level: 55 },
-            { name: "Drizzle ORM", level: 45 },
+            { name: "Next.js", level: 3 },
+            { name: "React", level: 3 },
+            { name: "Tailwind CSS", level: 2 },
+            { name: "React Three Fiber", level: 2 },
+            { name: "Flutter", level: 2 },
+            { name: "Zustand", level: 2 },
+            { name: "Hono", level: 1 },
+            { name: "Drizzle ORM", level: 1 },
         ],
     },
     {
         category: "Infra & Platforms",
         items: [
-            { name: "Cloudflare (Workers/R2/D1)", level: 70 },
-            { name: "Firebase", level: 60 },
-            { name: "Google Maps Platform", level: 55 },
-            { name: "Arduino", level: 40 },
+            { name: "Cloudflare (Workers/R2/D1)", level: 2 },
+            { name: "Firebase", level: 1 },
+            { name: "Google Maps Platform", level: 1 },
+            { name: "Arduino", level: 1 },
         ],
     },
 ];

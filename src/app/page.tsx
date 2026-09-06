@@ -57,7 +57,7 @@ export default function HomePage() {
                         </h2>
                         <p className='text-sm text-muted'>
                             習熟度は自己申告の目安です（主戦力 / 制作で常用 /
-                            実装経験あり / 学習中）
+                            実装経験あり の3段階）
                         </p>
                     </div>
 
