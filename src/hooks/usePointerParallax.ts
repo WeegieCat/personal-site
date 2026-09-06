@@ -38,8 +38,13 @@ export function usePointerParallax(
 
         const onMove = (e: PointerEvent) => {
             const rect = container.getBoundingClientRect();
-            targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            targetY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+            const rawX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const rawY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+            // ポインタがcontainerの外（余白やヘッダー上など）にあると±1を
+            // 超えてしまい、strengthで想定した最大移動量を超えて動いてしまうため
+            // 必ず-1〜1にクランプする
+            targetX = Math.min(1, Math.max(-1, rawX));
+            targetY = Math.min(1, Math.max(-1, rawY));
         };
 
         const onLeave = () => {

@@ -45,6 +45,8 @@
     --font-mono: var(--font-geist-mono);
 
     --animate-fade: fade-in 0.5s ease-out both;
+    /* duration/delayは要素ごとにJS側でinline styleとして上書きするため、ここでの値はダミー */
+    --animate-code-rise: code-rise 8s linear infinite;
 
     @keyframes fade-in {
         from {
@@ -54,6 +56,51 @@
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    /*
+     * ヒーロー背景の「コードが炎のように立ち上る」演出用（Hero.tsx、全テーマ共通）。
+     * bottomを-12%→108%へ動かすことで下端から上端の外まで一直線に上昇させつつ、
+     * 中間のopacity/translateXをジグザグに振ることで炎のような明滅・揺らぎを重ねている。
+     */
+    @keyframes code-rise {
+        0% {
+            bottom: -12%;
+            opacity: 0;
+            transform: translateX(0);
+        }
+        6% {
+            opacity: 0.85;
+        }
+        14% {
+            opacity: 0.3;
+            transform: translateX(-0.2em);
+        }
+        26% {
+            opacity: 0.7;
+            transform: translateX(0.2em);
+        }
+        40% {
+            opacity: 0.25;
+            transform: translateX(-0.15em);
+        }
+        54% {
+            opacity: 0.6;
+            transform: translateX(0.15em);
+        }
+        68% {
+            opacity: 0.3;
+            transform: translateX(-0.1em);
+        }
+        82% {
+            opacity: 0.55;
+            transform: translateX(0.1em);
+        }
+        100% {
+            bottom: 108%;
+            opacity: 0;
+            transform: translateX(0);
         }
     }
 }
