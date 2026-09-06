@@ -36,7 +36,7 @@ export interface BlogPostMeta {
 
 /**
  * 習熟度。細かい数値に客観的な根拠は置けないので3段階に丸める。
- * 3=主戦力 / 2=制作で常用 / 1=実装経験あり（対応する表示は SkillMeters の LEVEL_STEPS）
+ * 3=自信あり / 2=制作で常用 / 1=実装経験あり（対応する表示は SkillMeters の LEVEL_STEPS）
  */
 export type SkillLevel = 1 | 2 | 3;
 

@@ -9,7 +9,7 @@ import type { SkillCategory, SkillLevel } from "@/types";
  * バーの横には必ずラベルを出す。
  */
 const LEVEL_STEPS: Record<SkillLevel, { label: string; width: string }> = {
-    3: { label: "主戦力", width: "80%" },
+    3: { label: "自信あり", width: "80%" },
     2: { label: "制作で常用", width: "60%" },
     1: { label: "実装経験あり", width: "40%" },
 };

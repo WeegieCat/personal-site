@@ -44,7 +44,7 @@ export const featuredProjects = projects.filter((p) => p.featured);
 
 /**
  * Skills & Expertise のスライダー。
- * level は 3=主戦力 / 2=制作で常用 / 1=実装経験あり の3段階（SkillLevel）。
+ * level は 3=自信あり / 2=制作で常用 / 1=実装経験あり の3段階（SkillLevel）。
  * カード内は level の降順で並べる。
  */
 export const skills: SkillCategory[] = [
