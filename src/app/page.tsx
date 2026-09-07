@@ -12,7 +12,15 @@ export default function HomePage() {
         <>
             <Hero />
 
-            <section id='hero-next' className='py-20'>
+            {/*
+             * ヒーロー(bg-hero-bg)との境目に直線が出るため、About側の上端で
+             * hero-bg から background へ徐々に落として境目を消す。
+             * ヒーロー側に要素を足すとヒーロー内の高さ計算に影響するので、
+             * 処理はこちら（後続セクション）に持たせている。
+             */}
+            <section
+                id='hero-next'
+                className='bg-[linear-gradient(to_bottom,var(--hero-bg),var(--background)_240px)] py-20'>
                 <Container size='default'>
                     <h2 className='mb-2 text-4xl font-bold sm:text-5xl'>
                         About Me
