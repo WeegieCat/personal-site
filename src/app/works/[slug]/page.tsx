@@ -97,7 +97,7 @@ export default async function WorkDetailPage({ params }: Params) {
                                 target='_blank'
                                 rel='noopener noreferrer'
                                 className='rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-hover'>
-                                サイトを開く
+                                View Project
                             </a>
                         )}
                         {project.github && (
