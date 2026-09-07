@@ -164,6 +164,30 @@
 }
 
 /*
+ * ページ側の装飾がフッターに重なるページ（404）向けの、フッターのネガ表示。
+ * data-negative-footer を持つ要素があるページでだけ有効になる。
+ *
+ * - z-index でフッターをページ側の装飾より前に出す。position:absolute の円は
+ *   フッターより後に描かれるため、これが無いと文字が覆われるうえ、
+ *   mix-blend-mode の合成対象（backdrop）にもならない。
+ * - 背景と境界線を透明にして円が透け、文字だけを白 + difference で描く。
+ *   背景を反転した色になるので、薄い下地の上でも primary の円の上でも、
+ *   どのテーマでも読める（ヘッダーのネガ表示と同じ仕組み）。
+ */
+body:has([data-negative-footer]) footer {
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    border-color: transparent;
+    mix-blend-mode: difference;
+}
+
+body:has([data-negative-footer]) footer,
+body:has([data-negative-footer]) footer a {
+    color: #fff;
+}
+
+/*
  * ホバーで下線がスライドインするリンク用ユーティリティ。
  * 色は要素側の text-* クラスに任せ、下線には currentColor を使うことで
  * どのテーマ配色・どの文字色の上でも自然に一致する。
