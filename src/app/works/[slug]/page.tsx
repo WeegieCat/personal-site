@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/ui/Container";
+import CodeRise, { PAGE_CODE_RISE } from "@/components/ui/CodeRise";
 import ProductEmbed from "@/components/works/ProductEmbed";
 import BonsaiPreview from "@/three/canvas/BonsaiPreview";
 import { projects } from "@/content/projects";
@@ -34,73 +35,83 @@ export default async function WorkDetailPage({ params }: Params) {
     if (!project) notFound();
 
     return (
-        <Container size='wide' className='py-16'>
-            <Link
-                href='/works'
-                className='hv-underline mb-8 inline-block text-sm text-muted'>
-                ← Works に戻る
-            </Link>
+        <>
+            {/* 一覧ページと同じ、通常ページ向けに落としたコード上昇の演出 */}
+            <CodeRise className='fixed inset-0 -z-10' {...PAGE_CODE_RISE} />
 
-            <header className='mb-8'>
-                <h1 className='mb-4 text-4xl font-bold'>{project.title}</h1>
-                <p className='mb-4 text-lg text-muted'>{project.description}</p>
+            <Container size='wide' className='py-16'>
+                <Link
+                    href='/works'
+                    className='hv-underline mb-8 inline-block text-sm text-muted'>
+                    ← Works に戻る
+                </Link>
 
-                <div className='flex flex-wrap gap-2'>
-                    {project.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className='inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-medium text-muted'>
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-            </header>
+                <header className='mb-8'>
+                    <h1 className='mb-4 text-4xl font-bold'>{project.title}</h1>
+                    <p className='mb-4 text-lg text-muted'>
+                        {project.description}
+                    </p>
 
-            {project.slug === "trie-bonsai" ? (
-                <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
-                    <BonsaiPreview className='h-full w-full' />
-                </div>
-            ) : (
-                project.image && (
-                    <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
-                        <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            sizes='(max-width: 1200px) 100vw, 1024px'
-                            className='object-contain'
-                        />
+                    <div className='flex flex-wrap gap-2'>
+                        {project.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className='inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-medium text-muted'>
+                                {tag}
+                            </span>
+                        ))}
                     </div>
-                )
-            )}
+                </header>
 
-            {/* embedUrl を持つプロダクトはこの場で動かせる */}
-            {project.embedUrl && (
-                <ProductEmbed src={project.embedUrl} title={project.title} />
-            )}
+                {project.slug === "trie-bonsai" ? (
+                    <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
+                        <BonsaiPreview className='h-full w-full' />
+                    </div>
+                ) : (
+                    project.image && (
+                        <div className='relative mb-8 h-80 overflow-hidden rounded-lg border border-border bg-surface sm:h-96'>
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                sizes='(max-width: 1200px) 100vw, 1024px'
+                                className='object-contain'
+                            />
+                        </div>
+                    )
+                )}
 
-            {(project.link || project.github) && (
-                <div className='mt-8 flex gap-4'>
-                    {project.link && (
-                        <a
-                            href={project.link}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-hover'>
-                            サイトを開く
-                        </a>
-                    )}
-                    {project.github && (
-                        <a
-                            href={project.github}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='rounded-lg border border-border px-6 py-3 font-medium transition-colors hover:bg-surface'>
-                            GitHub
-                        </a>
-                    )}
-                </div>
-            )}
-        </Container>
+                {/* embedUrl を持つプロダクトはこの場で動かせる */}
+                {project.embedUrl && (
+                    <ProductEmbed
+                        src={project.embedUrl}
+                        title={project.title}
+                    />
+                )}
+
+                {(project.link || project.github) && (
+                    <div className='mt-8 flex gap-4'>
+                        {project.link && (
+                            <a
+                                href={project.link}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-hover'>
+                                サイトを開く
+                            </a>
+                        )}
+                        {project.github && (
+                            <a
+                                href={project.github}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='rounded-lg border border-border px-6 py-3 font-medium transition-colors hover:bg-surface'>
+                                GitHub
+                            </a>
+                        )}
+                    </div>
+                )}
+            </Container>
+        </>
     );
 }

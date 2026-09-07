@@ -15,13 +15,7 @@ export default async function BlogPage() {
     return (
         <>
             {/* Works と同じ、通常ページ向けに落としたコード上昇の演出 */}
-            <CodeRise
-                className='fixed inset-0 -z-10'
-                count={PAGE_CODE_RISE.count}
-                minDuration={PAGE_CODE_RISE.minDuration}
-                durationSpan={PAGE_CODE_RISE.durationSpan}
-                opacity={PAGE_CODE_RISE.opacity}
-            />
+            <CodeRise className='fixed inset-0 -z-10' {...PAGE_CODE_RISE} />
 
             <Container className='py-16'>
                 <header className='mb-12'>

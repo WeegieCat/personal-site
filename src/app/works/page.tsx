@@ -17,13 +17,7 @@ export default function WorksPage() {
              * ゆっくりにして敷く。ページ全体の背景にしたいので fixed。
              * -z-10 でも body の背景（canvas に伝播する）より手前に描画される。
              */}
-            <CodeRise
-                className='fixed inset-0 -z-10'
-                count={PAGE_CODE_RISE.count}
-                minDuration={PAGE_CODE_RISE.minDuration}
-                durationSpan={PAGE_CODE_RISE.durationSpan}
-                opacity={PAGE_CODE_RISE.opacity}
-            />
+            <CodeRise className='fixed inset-0 -z-10' {...PAGE_CODE_RISE} />
 
             <Container size='wide' className='py-16'>
                 <header className='mb-12'>
