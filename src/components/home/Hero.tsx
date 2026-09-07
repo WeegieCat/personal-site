@@ -4,33 +4,10 @@ import { useRef } from "react";
 import { usePointerParallax } from "@/hooks/usePointerParallax";
 import { useAutoFitScale } from "@/hooks/useAutoFitScale";
 import { useSpaceBelow } from "@/hooks/useSpaceBelow";
+import CodeRise from "@/components/ui/CodeRise";
 import { SITE_NAME } from "@/lib/site";
 
 const NAME = SITE_NAME.toUpperCase();
-
-// ヒーロー背景で下から上へ立ち上るダミーのコード片。
-// 意味のあるロジックである必要はなく、見た目のリアリティだけを狙っている。
-//
-// 1行が「}」だけのような極端に短い断片は、背景に記号がぽつんと浮かんでいる
-// ようにしか見えないため、各行は必ず単体で「コードらしく」見える長さにする
-// （閉じ括弧は前の行に畳んで一行にまとめている）。
-const CODE_FRAGMENTS = [
-    "const flame = new Particle();",
-    "for (let i = 0; i < n; i++) { step(i); }",
-    "  col[i].y -= speed * dt;",
-    "if (y < top) reset(col[i]);",
-    "gl_FragColor = vec4(rgb, a);",
-    "function flicker(seed) { return noise(seed); }",
-    "  return noise(seed) * 0.5;",
-    "requestAnimationFrame(loop);",
-    "ctx.globalAlpha = fade(t);",
-    "class Ember extends Sprite { life = 1; }",
-    "  update(dt) { this.life -= dt; }",
-    "export function rise(cols) { return cols; }",
-    "  return cols.map(draw);",
-    // 上の意図を将来の編集でも壊さないための保険。3文字以下の断片は使わない
-].filter((fragment) => fragment.trim().length > 3);
-const CODE_STREAM_COUNT = CODE_FRAGMENTS.length;
 
 // ワードマークのパララックス移動量。左右どちらにも最大この分だけ動くため、
 // 自動縮小(useAutoFitScale)の安全マージンにもそのまま使う
@@ -40,13 +17,6 @@ const WORDMARK_PARALLAX_STRENGTH = 28;
 // ワードマークの高さは画面幅で変わるため、下端基準だけだとボタンの高さが
 // 幅ごとに大きくばらつく。比率で下限を設けてどの幅でも同じ位置に揃える。
 const BUTTON_MIN_TOP_RATIO = 0.73;
-
-// サーバー/クライアントで同じ値になる必要があるためMath.random()は使わず、
-// indexから決定的に値を作る簡易疑似乱数
-function pseudoRandom(seed: number) {
-    const x = Math.sin(seed * 12.9898) * 43758.5453;
-    return x - Math.floor(x);
-}
 
 function scrollToNext() {
     document
@@ -127,54 +97,20 @@ export default function Hero() {
                 />
 
                 {/*
-                 * 背景の「コードが炎のように立ち上る」演出（全テーマ共通）。
-                 * 文字色は text-primary / text-accent というテーマトークン参照
-                 * なので、テーマを切り替えるとその配色のまま追従する。
+                 * 背景の「コードが炎のように立ち上る」演出。
                  * 描画範囲はヒーロー最上部からセクション外（Aboutの手前）まで。
-                 * 各ストリームはindex由来の疑似乱数でduration/delay/横位置をずらし、
-                 * 一斉に同じ動きにならないようにしている（負のdelayで開始時点から
-                 * 既に流れている状態にする）。装飾なので読み上げ対象から外す。
+                 * 密度・速度の既定値がそのままヒーローの見た目になる。
                  */}
-                <div
-                    aria-hidden='true'
-                    className='pointer-events-none absolute inset-x-0 top-0 bottom-[-8rem] overflow-hidden'>
-                    {CODE_FRAGMENTS.map((fragment, i) => {
-                        const duration = 7 + pseudoRandom(i * 1.7) * 6;
-                        const delay = -(pseudoRandom(i * 3.1) * duration);
-                        const left = Math.min(
-                            94,
-                            (i / CODE_STREAM_COUNT) * 100 +
-                                (pseudoRandom(i * 5.3) - 0.5) * 6
-                        );
-                        const isAccent = i % 4 === 3;
-                        return (
-                            <span
-                                key={i}
-                                style={{
-                                    left: `${left.toFixed(2)}%`,
-                                    bottom: "30%",
-                                    animationName: "code-rise",
-                                    animationDuration: `${duration.toFixed(2)}s`,
-                                    animationDelay: `${delay.toFixed(2)}s`,
-                                    animationTimingFunction: "linear",
-                                    animationIterationCount: "infinite",
-                                    textShadow: "0 0 6px currentColor",
-                                }}
-                                className={`animate-code-rise absolute font-mono text-[11px] whitespace-nowrap opacity-0 sm:text-xs motion-reduce:[animation:none] motion-reduce:opacity-[0.18] ${
-                                    isAccent ? "text-accent" : "text-primary"
-                                }`}>
-                                {fragment}
-                            </span>
-                        );
-                    })}
-                </div>
+                <CodeRise className='absolute inset-x-0 top-0 bottom-[-8rem]' />
 
                 {/* 実際のページ見出しはこちら。視覚的な表現はすべて装飾として下に重ねる */}
                 <h1 className='sr-only'>
                     Hi, I&apos;m {SITE_NAME} — a Playful Developer
                 </h1>
 
-                <div ref={introRef} className='relative z-10 mt-12 max-w-xs sm:mt-16'>
+                <div
+                    ref={introRef}
+                    className='relative z-10 mt-12 max-w-xs sm:mt-16'>
                     <p className='text-sm font-extrabold tracking-[0.4em] text-on-primary sm:text-base'>
                         {NAME}
                     </p>
