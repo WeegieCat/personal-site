@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { pseudoRandom } from "@/lib/pseudo-random";
 import type { SkillCategory, SkillLevel } from "@/types";
 
 /**
@@ -13,6 +14,11 @@ const LEVEL_STEPS: Record<SkillLevel, { label: string; width: string }> = {
     2: { label: "制作で常用", width: "60%" },
     1: { label: "実装経験あり", width: "40%" },
 };
+
+// 沸騰の微振動の周期(秒)。全部同じだと波が揃って機械的に見えるので、
+// 項目ごとに BOIL_MIN 〜 BOIL_MIN+BOIL_SPAN の間でばらつかせる
+const BOIL_MIN_DURATION = 1.7;
+const BOIL_DURATION_SPAN = 1.3;
 
 interface SkillMetersProps {
     categories: SkillCategory[];
@@ -35,16 +41,14 @@ export default function SkillMeters({ categories }: SkillMetersProps) {
                     observer.disconnect();
                 }
             },
-            { threshold: 0.2 },
+            { threshold: 0.2 }
         );
         observer.observe(el);
         return () => observer.disconnect();
     }, []);
 
     return (
-        <div
-            ref={rootRef}
-            className='grid grid-cols-1 gap-8 md:grid-cols-3'>
+        <div ref={rootRef} className='grid grid-cols-1 gap-8 md:grid-cols-3'>
             {categories.map((category) => (
                 <div
                     key={category.category}
@@ -53,40 +57,56 @@ export default function SkillMeters({ categories }: SkillMetersProps) {
                         {category.category}
                     </h3>
                     <ul className='space-y-5'>
-                        {category.items.map((skill, index) => (
-                            <li key={skill.name}>
-                                <div className='mb-2 flex items-baseline justify-between gap-3'>
-                                    <span className='text-sm font-medium'>
-                                        {skill.name}
-                                    </span>
-                                    <span className='shrink-0 font-mono text-xs text-muted'>
-                                        {LEVEL_STEPS[skill.level].label}
-                                    </span>
-                                </div>
-                                <div
-                                    role='progressbar'
-                                    aria-label={skill.name}
-                                    aria-valuemin={1}
-                                    aria-valuemax={3}
-                                    aria-valuenow={skill.level}
-                                    aria-valuetext={
-                                        LEVEL_STEPS[skill.level].label
-                                    }
-                                    className='h-2 w-full overflow-hidden rounded-full bg-border'>
+                        {category.items.map((skill, index) => {
+                            // カテゴリ名も種にして、3枚のカードで同じ並びの
+                            // 波が繰り返されないようにする
+                            const seed = index + category.category.length;
+                            const boilDuration =
+                                BOIL_MIN_DURATION +
+                                pseudoRandom(seed * 1.9) * BOIL_DURATION_SPAN;
+                            const boilDelay = -(
+                                pseudoRandom(seed * 3.7) * boilDuration
+                            );
+                            return (
+                                <li key={skill.name}>
+                                    <div className='mb-2 flex items-baseline justify-between gap-3'>
+                                        <span className='text-sm font-medium'>
+                                            {skill.name}
+                                        </span>
+                                        <span className='shrink-0 font-mono text-xs text-muted'>
+                                            {LEVEL_STEPS[skill.level].label}
+                                        </span>
+                                    </div>
                                     <div
-                                        className='h-full rounded-full bg-linear-to-r from-primary to-accent transition-[width] duration-1000 ease-out motion-reduce:transition-none'
-                                        style={{
-                                            width: revealed
-                                                ? LEVEL_STEPS[skill.level]
-                                                      .width
-                                                : "0%",
-                                            // カード内で上から順に伸びていくよう少しずつ遅らせる
-                                            transitionDelay: `${index * 80}ms`,
-                                        }}
-                                    />
-                                </div>
-                            </li>
-                        ))}
+                                        role='progressbar'
+                                        aria-label={skill.name}
+                                        aria-valuemin={1}
+                                        aria-valuemax={3}
+                                        aria-valuenow={skill.level}
+                                        aria-valuetext={
+                                            LEVEL_STEPS[skill.level].label
+                                        }
+                                        className='h-2 w-full overflow-hidden rounded-full bg-border'>
+                                        <div
+                                            className='animate-skill-boil h-full origin-left rounded-full bg-linear-to-r from-primary to-accent transition-[width] duration-1000 ease-out motion-reduce:animate-none motion-reduce:transition-none'
+                                            style={{
+                                                width: revealed
+                                                    ? LEVEL_STEPS[skill.level]
+                                                          .width
+                                                    : "0%",
+                                                // カード内で上から順に伸びていくよう少しずつ遅らせる
+                                                transitionDelay: `${index * 80}ms`,
+                                                // 沸騰の微振動。widthのtransitionとは別プロパティ
+                                                // (transform)を動かすので互いに干渉しない。
+                                                // 負のdelayで開始時点から途中の位相に散らす
+                                                animationDuration: `${boilDuration.toFixed(2)}s`,
+                                                animationDelay: `${boilDelay.toFixed(2)}s`,
+                                            }}
+                                        />
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             ))}

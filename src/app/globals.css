@@ -47,6 +47,7 @@
     --animate-fade: fade-in 0.5s ease-out both;
     /* duration/delayは要素ごとにJS側でinline styleとして上書きするため、ここでの値はダミー */
     --animate-code-rise: code-rise 8s linear infinite;
+    --animate-skill-boil: skill-boil 2s ease-in-out infinite;
 
     @keyframes fade-in {
         from {
@@ -101,6 +102,38 @@
             bottom: 108%;
             opacity: 0;
             transform: translateX(0);
+        }
+    }
+
+    /*
+     * Skills のバーが沸騰しているように見える微振動（SkillMeters）。
+     * widthは「画面に入ったら伸びる」transitionが握っているため、
+     * こちらはtransformだけを動かして両者がぶつからないようにしている。
+     * transform-origin: left（origin-left）が前提で、右端だけが揺れる。
+     * 振れ幅を等間隔にすると機械的な往復に見えるので、山と谷の高さと
+     * 間隔をわざと不揃いにしている。
+     */
+    @keyframes skill-boil {
+        0% {
+            transform: scaleX(1);
+        }
+        18% {
+            transform: scaleX(1.012);
+        }
+        34% {
+            transform: scaleX(0.997);
+        }
+        52% {
+            transform: scaleX(1.007);
+        }
+        68% {
+            transform: scaleX(0.993);
+        }
+        84% {
+            transform: scaleX(1.004);
+        }
+        100% {
+            transform: scaleX(1);
         }
     }
 }

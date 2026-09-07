@@ -1,3 +1,5 @@
+import { pseudoRandom } from "@/lib/pseudo-random";
+
 // 背景で下から上へコードが立ち上る演出（全テーマ共通）。
 // ヒーローと、Works / Blog のような通常ページで密度と速度を変えて使い回す。
 //
@@ -27,13 +29,6 @@ const CODE_FRAGMENTS = [
     "  return cols.map(draw);",
     // 上の意図を将来の編集でも壊さないための保険。3文字以下の断片は使わない
 ].filter((fragment) => fragment.trim().length > 3);
-
-// サーバー/クライアントで同じ値になる必要があるためMath.random()は使わず、
-// indexから決定的に値を作る簡易疑似乱数
-function pseudoRandom(seed: number) {
-    const x = Math.sin(seed * 12.9898) * 43758.5453;
-    return x - Math.floor(x);
-}
 
 /**
  * Works / Blog のような通常ページ用のプリセット。
