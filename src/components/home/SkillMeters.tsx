@@ -17,8 +17,8 @@ const LEVEL_STEPS: Record<SkillLevel, { label: string; width: string }> = {
 
 // 沸騰の微振動の周期(秒)。全部同じだと波が揃って機械的に見えるので、
 // 項目ごとに BOIL_MIN 〜 BOIL_MIN+BOIL_SPAN の間でばらつかせる
-const BOIL_MIN_DURATION = 1.7;
-const BOIL_DURATION_SPAN = 1.3;
+const BOIL_MIN_DURATION = 0.55;
+const BOIL_DURATION_SPAN = 0.45;
 
 interface SkillMetersProps {
     categories: SkillCategory[];
