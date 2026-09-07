@@ -60,13 +60,9 @@ export default function HomePage() {
             <section className='py-20'>
                 <Container size='wide'>
                     <div className='mb-16 text-center'>
-                        <h2 className='mb-4 text-4xl font-bold sm:text-5xl'>
+                        <h2 className='text-4xl font-bold sm:text-5xl'>
                             Skills &amp; Expertise
                         </h2>
-                        <p className='text-sm text-muted'>
-                            習熟度は自己申告の目安です（自信あり / 制作で常用
-                            / 実装経験あり の3段階）
-                        </p>
                     </div>
 
                     <SkillMeters categories={skills} />

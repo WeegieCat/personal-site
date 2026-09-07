@@ -15,14 +15,16 @@ export default function NotFound() {
         // overflow-x は clip。hidden にすると overflow-y も auto に計算され、
         // はみ出した装飾のぶん縦スクロールバーが出る（ヒーローと同じ理由）。
         <section
-            // 右下の円がフッターに重なるので、フッターをネガ表示に切り替える。
-            // 実際の切り替えは globals.css の body:has([data-negative-footer])
-            data-negative-footer
+            // 右下の円がフッターに重なるので、フッターの中身を左に寄せる。
+            // 実際の余白は globals.css の body:has([data-footer-clear-right])
+            data-footer-clear-right
             className='relative flex min-h-[80vh] items-center overflow-x-clip bg-hero-bg'>
             {/* 右下から画面外へ抜ける円。装飾なので読み上げ対象から外す */}
             <div
                 aria-hidden='true'
-                className='absolute -right-[25%] -bottom-[40%] aspect-square w-[80%] max-w-[520px] rounded-full bg-primary sm:w-[50%]'
+                // 狭い画面ではフッターを寄せる余地が無いので、円をセクション内に
+                // 収めて重なり自体を作らない（sm以上でだけ下へはみ出させる）
+                className='absolute -right-[25%] bottom-0 aspect-square w-[80%] max-w-[520px] rounded-full bg-primary sm:-bottom-[40%] sm:w-[50%]'
             />
 
             {/* 他のページと同じ密度・速度・濃さのコード上昇 */}
