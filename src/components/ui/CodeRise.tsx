@@ -44,6 +44,7 @@ export const PAGE_CODE_RISE = {
     count: 8,
     minDuration: 16,
     durationSpan: 12,
+    opacity: 0.4,
 } as const;
 
 interface CodeRiseProps {
@@ -57,6 +58,12 @@ interface CodeRiseProps {
     /** minDuration に上乗せされる秒数の幅。本数ぶんばらけさせるために使う */
     durationSpan?: number;
     /**
+     * レイヤー全体にかける不透明度(0〜1)。
+     * 各コード片が持つ明滅のopacityに掛け算されるため、
+     * 明滅の抑揚はそのままに全体だけを薄くできる。
+     */
+    opacity?: number;
+    /**
      * レイヤーの位置指定。呼び出し側の都合で
      * absolute（セクション内に敷く）と fixed（ページ全体に敷く）を切り替える。
      */
@@ -67,6 +74,7 @@ export default function CodeRise({
     count = CODE_FRAGMENTS.length,
     minDuration = 7,
     durationSpan = 6,
+    opacity = 1,
     className = "absolute inset-0",
 }: CodeRiseProps) {
     const fragments = CODE_FRAGMENTS.slice(0, count);
@@ -79,6 +87,7 @@ export default function CodeRise({
         // 既に流れている状態にする）。装飾なので読み上げ対象から外す。
         <div
             aria-hidden='true'
+            style={{ opacity }}
             className={`pointer-events-none overflow-hidden ${className}`}>
             {fragments.map((fragment, i) => {
                 const duration =

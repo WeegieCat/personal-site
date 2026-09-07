@@ -22,6 +22,7 @@ export default function WorksPage() {
                 count={PAGE_CODE_RISE.count}
                 minDuration={PAGE_CODE_RISE.minDuration}
                 durationSpan={PAGE_CODE_RISE.durationSpan}
+                opacity={PAGE_CODE_RISE.opacity}
             />
 
             <Container size='wide' className='py-16'>
